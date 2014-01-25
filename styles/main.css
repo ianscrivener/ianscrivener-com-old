@@ -1380,7 +1380,7 @@ nav a:hover {
 /* line 111, ../../source/styles/_nav.scss */
 .social-media a:hover {
   text-decoration: none;
-  color: #393838;
+  color: white;
 }
 @media (max-width: 1250px) {
   /* line 97, ../../source/styles/_nav.scss */
@@ -1404,9 +1404,9 @@ nav a:hover {
 /* line 12, ../../source/styles/_post.scss */
 .post-title {
   float: left;
-  padding-right: 4.9em;
+  padding-right: 120px;
   margin: 0 0 5px;
-  font-size: 1.7em;
+  font-size: 1.9em;
 }
 @media (max-width: 1250px) {
   /* line 12, ../../source/styles/_post.scss */
@@ -1435,7 +1435,7 @@ nav a:hover {
 .post-body {
   margin-bottom: 1.2em;
   font-family: "Merriweather", serif;
-  line-height: 1.65em;
+  line-height: 1.3em;
 }
 
 /* line 43, ../../source/styles/_post.scss */
@@ -1502,30 +1502,47 @@ nav a:hover {
   }
 }
 
-/* line 34, ../../source/styles/_z-nav.scss */
+/* line 35, ../../source/styles/_z-nav.scss */
 .social-media a {
   color: #94b352;
 }
-@media (max-height: 440px) {
-  /* line 34, ../../source/styles/_z-nav.scss */
+@media (max-height: 510px) {
+  /* line 35, ../../source/styles/_z-nav.scss */
   .social-media a {
     display: none;
   }
 }
 
 /* line 43, ../../source/styles/_z-nav.scss */
-.home-link {
-  display: none;
+.z-desktop-only {
+  display: block;
 }
 @media (max-width: 1250px) {
   /* line 43, ../../source/styles/_z-nav.scss */
-  .home-link {
-    display: block;
+  .z-desktop-only {
+    display: none;
   }
 }
 @media (max-width: 630px) {
   /* line 43, ../../source/styles/_z-nav.scss */
-  .home-link {
+  .z-desktop-only {
+    display: none;
+  }
+}
+
+/* line 54, ../../source/styles/_z-nav.scss */
+.z-device-only {
+  display: none;
+}
+@media (max-width: 1250px) {
+  /* line 54, ../../source/styles/_z-nav.scss */
+  .z-device-only {
+    display: block;
+  }
+}
+@media (max-width: 630px) {
+  /* line 54, ../../source/styles/_z-nav.scss */
+  .z-device-only {
     display: block;
   }
 }
@@ -1534,9 +1551,6 @@ nav a:hover {
 .z-intro-container {
   background-color: #e4e4e4;
   background-color: #94b352;
-  background-image: url("/images/me3.png");
-  background-position: 10px 20px;
-  background-repeat: no-repeat;
   padding: 10px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -1545,48 +1559,53 @@ nav a:hover {
   border-radius: 6px;
   margin-bottom: 20px;
 }
+/* line 13, ../../source/styles/_z-intro.scss */
+.z-intro-container img {
+  float: left;
+  margin: 0 1em 1em 0;
+}
 
-/* line 15, ../../source/styles/_z-intro.scss */
+/* line 17, ../../source/styles/_z-intro.scss */
 .z-intro {
   font-family: 'Open Sans',sans-serif;
   font-weight: 400;
   color: #dddddd;
   color: white;
   margin-top: 10px;
-  margin-left: 115px;
+  margin-left: 15px;
   margin-bottom: 15px;
   margin-right: 15px;
   font-size: 15px;
 }
-/* line 23, ../../source/styles/_z-intro.scss */
+/* line 18, ../../source/styles/_z-intro.scss */
+.z-intro img {
+  float: left;
+  margin: 0 1em 1em 0;
+}
+/* line 26, ../../source/styles/_z-intro.scss */
 .z-intro a {
   color: #1c456a;
   font-weight: 400;
 }
-/* line 27, ../../source/styles/_z-intro.scss */
+/* line 30, ../../source/styles/_z-intro.scss */
 .z-intro a.std {
   font-weight: normal;
   color: #f8f8f8;
   font-weight: 400;
 }
-/* line 32, ../../source/styles/_z-intro.scss */
-.z-intro b, .z-intro strong {
-  color: #1c456a;
-  font-weight: 400;
-}
-/* line 36, ../../source/styles/_z-intro.scss */
+/* line 38, ../../source/styles/_z-intro.scss */
 .z-intro em {
   color: #fff;
   font-weight: 600;
   font-style: normal;
 }
 
-/* line 45, ../../source/styles/_z-intro.scss */
+/* line 47, ../../source/styles/_z-intro.scss */
 .z-intro-r {
   color: #412c14;
 }
 
-/* line 49, ../../source/styles/_z-intro.scss */
+/* line 51, ../../source/styles/_z-intro.scss */
 .z-intro-containerimg {
   margin-right: 12px;
   float: left;
