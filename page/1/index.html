@@ -1,0 +1,204 @@
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Ian Scrivener - node.js - angular.js - grunt.js - d3.js - Jade - LESS - SASS - Jade - mySQL - PostgreSQL - mongoDB - Cloud - geoserver - openlayers - leaflet</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web development, sysadmin, devops, web mapping/GIS and other stuff...</p>
+</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home    </a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><a href="skype:ianscrivener?chat" class="icon-skype"></a><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><!-- /pages/includes/intro.jade--><div class="z-intro-container"><div class="z-intro"> <img src="/images/me3.png"><p>hi, my name is <strong>Ian Scrivener</strong>. I&#39;m an Australian web technology specifialist, fullstack/backend web developer &amp; cloud sysadmin. I&#39;ve extensive (20 years) experience with medium to large scale web projects for .com, .gov &amp; .org. </p>
+<p>My main weapons include <em>javascript</em> (<strong>node.js</strong>, 
+<strong>angular.js</strong>, and <em>d3.js</em>), <em>SQL</em> &amp; <em>noSQL</em> <strong>databases</strong> (<em>mySQL</em>, <em>PostgresSQL</em>, <em>MSSQL</em>, <em>MongoDB</em>, <em>CouchDB</em> etc)</p>
+<p>Jan 2014: Looking for new projects - <a href="/contact.html">contact me</a></p>
+<p><a href="/about.html">...more</a></p>
+</div></div><div class="post-head group"><a href="/posts/config-node-js-as-an-upstart-service/"><h1 class="post-title">Config node.js as an upstart service</h1></a><span class="post-date">2013 &#183; 3 &#183; 12</span></div><div class="post-body markdown"><p>This How-To was wwritten for Ubuntu 12.10, though will likely also work for Ubuntu 12.04+ as well as other Linux flavours that support  upstart <a href="http://upstart.ubuntu.com/">Upstart</a>.</p>
+<h3><a name="1-create-an-upstart-script" class="anchor" href="#1-create-an-upstart-script"><span class="header-link"></span></a>1) Create an upstart script;</h3>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="o">/</span><span class="nx">node</span><span class="p">.</span><span class="nx">conf</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-add-code-like-this" class="anchor" href="#2-add-code-like-this"><span class="header-link"></span></a>2) add code like this:</h3>
+<pre><code><div class="highlight"><pre><span class="err">#</span><span class="o">!</span><span class="nx">upstart</span>
+<span class="nx">description</span> <span class="s2">&quot;node.js server&quot;</span>
+<span class="nx">author</span>      <span class="s2">&quot;Ian Scrivener&quot;</span>
+
+<span class="nx">start</span> <span class="nx">on</span> <span class="nx">startup</span>
+<span class="nx">stop</span> <span class="nx">on</span> <span class="nx">shutdown</span>
+
+<span class="err">#</span> <span class="nx">expect</span> <span class="nx">fork</span>
+<span class="err">#</span> <span class="nx">use</span> <span class="nx">daemon</span>
+
+<span class="nx">script</span>
+    <span class="kr">export</span> <span class="nx">HOME</span><span class="o">=</span>        <span class="s2">&quot;/root&quot;</span>
+    <span class="nx">echo</span>                 <span class="nx">$$</span> <span class="o">&gt;</span> <span class="err">/var/run/node.pid</span>
+    <span class="nx">cd</span>                  <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">promap</span><span class="o">/</span><span class="nx">wwwroot</span>
+    <span class="nx">exec</span>                <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">node</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">promap</span><span class="o">/</span><span class="nx">wwwroot</span><span class="o">/</span><span class="nx">app</span><span class="p">.</span><span class="nx">js</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&gt;&gt;</span> <span class="err">/var/log/node.log</span>
+<span class="nx">end</span> <span class="nx">script</span>
+
+
+<span class="nx">pre</span><span class="o">-</span><span class="nx">start</span> <span class="nx">script</span>
+    <span class="err">#</span> <span class="nb">Date</span> <span class="nx">format</span> <span class="nx">same</span> <span class="nx">as</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">()</span> <span class="k">for</span> <span class="nx">consistency</span>
+    <span class="nx">echo</span> <span class="s2">&quot;[`date -u +%Y-%m-%dT%T.%3AU`] (sys) Starting&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/var/log/node.log</span>
+<span class="nx">end</span> <span class="nx">script</span>
+
+<span class="nx">post</span><span class="o">-</span><span class="nx">start</span> <span class="nx">script</span>
+   <span class="nx">pgrep</span> <span class="o">-</span><span class="nx">f</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">node</span> <span class="o">&gt;</span> <span class="err">/var/run/node.pid</span>
+<span class="nx">end</span> <span class="nx">script</span>
+
+<span class="nx">pre</span><span class="o">-</span><span class="nx">stop</span> <span class="nx">script</span>
+    <span class="nx">rm</span> <span class="o">/</span><span class="kd">var</span><span class="err">/run/node.pid</span>
+    <span class="nx">echo</span> <span class="s2">&quot;[`date -u +%Y-%m-%dT%T.%3AU`] (sys) Stopping&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/var/log/node.log</span>
+<span class="nx">end</span> <span class="nx">script</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-create-chmod-the-log-file" class="anchor" href="#3-create-chmod-the-log-file"><span class="header-link"></span></a>3) Create &amp; chmod the log file</h3>
+<pre><code><div class="highlight"><pre><span class="nx">touch</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/node.log</span>
+<span class="nx">chmod</span> <span class="mi">666</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/node.log</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-startrestartstop-node-js" class="anchor" href="#4-startrestartstop-node-js"><span class="header-link"></span></a>4) Start/Restart/Stop node.js</h3>
+<pre><code><div class="highlight"><pre><span class="nx">start</span> <span class="nx">node</span>
+<span class="nx">restart</span> <span class="nx">node</span>
+<span class="nx">stop</span> <span class="nx">node</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-view-the-upstart-log" class="anchor" href="#5-view-the-upstart-log"><span class="header-link"></span></a>5) View the upstart log</h3>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/upstart/node.log</span>
+<span class="err">#</span> <span class="nx">or</span>
+<span class="nx">tail</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/upstart/node.log</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/config-node-js-as-an-upstart-service/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-a-pre-release-mysql-on-ubuntu/"><h1 class="post-title">Install a pre-release mySQL on Ubuntu</h1></a><span class="post-date">2012 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: This How-To was written to install mySQL 5.6 on Ubuntu 12.04 LTS. At the time mySQL 5.4 was the standard release available via apt/aptitude on Ubuntu. Though this process is a good guide to installing other pre-release mySQL versions on other Ubuntu version.</p>
+<h3><a name="1-ensure-a-thorough-uninstall-of-old-mysql-version" class="anchor" href="#1-ensure-a-thorough-uninstall-of-old-mysql-version"><span class="header-link"></span></a>1) Ensure a thorough uninstall of old mySQL version</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">remove</span> <span class="o">--</span><span class="nx">purge</span> <span class="nx">mysql</span><span class="o">-</span><span class="nx">server</span>
+
+<span class="err">#</span><span class="nx">uninstall</span> <span class="nx">apparmour</span> <span class="nx">as</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">known</span> <span class="nx">to</span> <span class="nx">argue</span> <span class="kd">with</span> <span class="nx">mysql</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">remove</span> <span class="nx">apparmour</span>
+
+<span class="err">#</span> <span class="nx">major</span> <span class="nx">apt</span> <span class="nx">spring</span> <span class="nx">clean</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">autoremove</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">clean</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">purge</span>
+
+<span class="err">#</span> <span class="nx">make</span> <span class="nx">sure</span> <span class="nx">there</span> <span class="nx">are</span> <span class="nx">no</span> <span class="nx">mySQL</span> <span class="nx">leftovers</span>
+<span class="nx">find</span> <span class="o">/</span> <span class="o">-</span><span class="nx">iname</span> <span class="nx">mysql</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-install-mysql-5-6" class="anchor" href="#2-install-mysql-5-6"><span class="header-link"></span></a>2) Install mysql 5.6</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">libaio</span><span class="o">-</span><span class="nx">dev</span>
+
+<span class="err">#</span><span class="nx">get</span> <span class="nx">the</span> <span class="nx">deb</span>
+<span class="nx">cd</span> <span class="o">/</span><span class="nx">tmp</span>
+<span class="nx">wget</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.12-debian6.0-x86_64.deb/from/http://cdn.mysql.com/</span>
+<span class="nx">mv</span> <span class="nx">index</span><span class="p">.</span><span class="nx">html</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+
+<span class="err">#</span> <span class="nx">install</span> <span class="nx">deb</span>
+<span class="nx">dpkg</span> <span class="o">-</span><span class="nx">i</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+<span class="err">#</span> <span class="k">delete</span> <span class="nx">the</span> <span class="nx">install</span> <span class="nx">file</span>
+<span class="nx">rm</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+<span class="err">#</span> <span class="nx">add</span> <span class="nx">group</span> <span class="o">&amp;</span> <span class="nx">user</span>
+<span class="nx">groupadd</span> <span class="nx">mysql</span>
+<span class="nx">useradd</span> <span class="o">-</span><span class="nx">r</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">mysql</span> <span class="nx">mysql</span>
+
+
+<span class="err">#</span> <span class="kr">goto</span> <span class="nx">the</span> <span class="nx">install</span> <span class="nx">directory</span>
+<span class="nx">cd</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">mysql</span><span class="o">/</span><span class="nx">server</span><span class="o">-</span><span class="mf">5.6</span>
+
+<span class="err">#</span> <span class="nx">create</span> <span class="nx">directory</span> <span class="k">for</span> <span class="nx">data</span> <span class="o">&amp;</span> <span class="nx">chown</span> <span class="nx">it</span> <span class="nx">msql</span>
+<span class="nx">mkdir</span> <span class="nx">data</span>
+<span class="nx">chown</span> <span class="nx">mysql</span><span class="o">:</span><span class="nx">mysql</span> <span class="nx">data</span>
+
+<span class="err">#</span> <span class="nx">run</span> <span class="nx">install</span> <span class="nx">script</span>
+<span class="nx">scripts</span><span class="o">/</span><span class="nx">mysql_install_db</span> <span class="o">--</span><span class="nx">user</span><span class="o">=</span><span class="nx">mysql</span>
+
+<span class="err">#</span> <span class="nx">move</span> <span class="nx">the</span> <span class="nx">config</span> <span class="nx">files</span> <span class="nx">t</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">places</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">my</span><span class="o">-</span><span class="k">default</span><span class="p">.</span><span class="nx">cnf</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">my</span><span class="p">.</span><span class="nx">cnf</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">mysql</span><span class="o">-</span><span class="nx">log</span><span class="o">-</span><span class="nx">rotate</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">logrotate</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span>
+
+<span class="err">#</span> <span class="nx">config</span> <span class="nx">PATH</span> <span class="nx">so</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">run</span> <span class="s1">&#39;mysql&#39;</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">any</span> <span class="nx">path</span>
+<span class="nx">echo</span> <span class="kr">export</span> <span class="nx">PATH</span><span class="o">=</span><span class="nx">$PATH</span><span class="o">:</span><span class="err">/opt/mysql/server-5.6/bin</span>
+
+<span class="err">#</span> <span class="nx">you</span> <span class="nx">may</span> <span class="nx">need</span> <span class="nx">to</span> <span class="nx">restart</span> <span class="nx">you</span> <span class="nx">CLI</span> <span class="nx">client</span> <span class="k">for</span> <span class="nx">path</span> <span class="nx">to</span> <span class="nx">take</span> <span class="nx">effect</span>
+
+
+<span class="err">#</span><span class="nx">Start</span> <span class="nx">mySQL</span> <span class="mf">5.6</span>
+<span class="nx">service</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span> <span class="nx">start</span>
+<span class="nx">service</span> <span class="nx">mysql</span> <span class="nx">start</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-setup-root-password" class="anchor" href="#3-setup-root-password"><span class="header-link"></span></a>3) Setup root password</h3>
+<pre><code><div class="highlight"><pre><span class="err">/opt/mysql/server-5.6/bin/mysql</span>
+<span class="nx">UPDATE</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">user</span> <span class="nx">SET</span> <span class="nx">Password</span><span class="o">=</span><span class="nx">PASSWORD</span><span class="p">(</span><span class="s1">&#39;Bundaberg1&#39;</span><span class="p">)</span> <span class="nx">WHERE</span> <span class="nx">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;ian&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;sleepyman&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;fred&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;Bundaberg1&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;geoserver&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;Bundaberg1&#39;</span><span class="p">;</span>
+<span class="nx">FLUSH</span> <span class="nx">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/install-a-pre-release-mysql-on-ubuntu/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/postgressql-restarting-monitoring-with-monit/"><h1 class="post-title">Postgressql (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 15</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">monit</span> <span class="o">-</span><span class="nx">y</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-config-monit-for-postgresql" class="anchor" href="#2-config-monit-for-postgresql"><span class="header-link"></span></a>2) Config Monit for postgresql</h3>
+<p>Create a monit config file for the postgresql init.d service</p>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">monit</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">postgrsql</span><span class="p">.</span><span class="nx">monit</span><span class="p">.</span><span class="nx">conf</span>
+</pre></div>
+</code></pre>
+<p>Append the following </p>
+<pre><code><div class="highlight"><pre><span class="nx">check</span> <span class="nx">process</span> <span class="nx">postgres</span> <span class="kd">with</span> <span class="nx">pidfile</span> <span class="o">/</span><span class="kd">var</span><span class="err">/run/postgresql/9.2-main.pid</span>
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/postgresql start&quot;</span>
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/postgresql stop&quot;</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-check-monit-config-syntax" class="anchor" href="#3-check-monit-config-syntax"><span class="header-link"></span></a>3) Check monit config syntax</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="o">-</span><span class="nx">t</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-restart-monit-to-effect-changes" class="anchor" href="#4-restart-monit-to-effect-changes"><span class="header-link"></span></a>4) Restart monit to effect changes</h3>
+<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">monit</span> <span class="nx">restart</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-check-monit" class="anchor" href="#5-check-monit"><span class="header-link"></span></a>5) Check monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="nx">status</span>
+</pre></div>
+</code></pre>
+<h3><a name="6-view-monit-log-files" class="anchor" href="#6-view-monit-log-files"><span class="header-link"></span></a>6) View Monit log files</h3>
+<pre><code><div class="highlight"><pre><span class="nx">tail</span> <span class="o">-</span><span class="nx">n</span> <span class="mi">50</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/monit.log</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/postgressql-restarting-monitoring-with-monit/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/tomcat-restarting-monitoring-with-monit/"><h1 class="post-title">Tomcat (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">monit</span> <span class="o">-</span><span class="nx">y</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-config-monit-for-tomcat6" class="anchor" href="#2-config-monit-for-tomcat6"><span class="header-link"></span></a>2) Config Monit for tomcat6</h3>
+<p>Create a monit config file for the tomcat6 init.d service</p>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">monit</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">tomcat6</span><span class="p">.</span><span class="nx">monit</span><span class="p">.</span><span class="nx">conf</span>
+</pre></div>
+</code></pre>
+<p>Append the following </p>
+<pre><code><div class="highlight"><pre><span class="nx">check</span> <span class="nx">process</span> <span class="nx">tomcat</span> <span class="kd">with</span> <span class="nx">pidfile</span> <span class="o">/</span><span class="kd">var</span><span class="err">/run/tomcat6.pid</span>
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 start&quot;</span>
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 stop&quot;</span>
+
+
+<span class="nx">check</span> <span class="nx">host</span> <span class="nx">tomcat6</span> <span class="kd">with</span> <span class="nx">address</span> <span class="nx">localhost</span> 
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 stop&quot;</span> 
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 restart&quot;</span> 
+    <span class="k">if</span> <span class="nx">failed</span> <span class="nx">port</span> <span class="mi">8080</span> <span class="nx">and</span> <span class="nx">protocol</span> <span class="nx">http</span>           
+        <span class="nx">then</span> <span class="nx">start</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-check-monit-config-syntax" class="anchor" href="#3-check-monit-config-syntax"><span class="header-link"></span></a>3) Check monit config syntax</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="o">-</span><span class="nx">t</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-restart-monit-to-effect-changes" class="anchor" href="#4-restart-monit-to-effect-changes"><span class="header-link"></span></a>4) Restart monit to effect changes</h3>
+<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">monit</span> <span class="nx">restart</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-check-monit" class="anchor" href="#5-check-monit"><span class="header-link"></span></a>5) Check monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="nx">status</span>
+</pre></div>
+</code></pre>
+<h3><a name="6-view-monit-log-files" class="anchor" href="#6-view-monit-log-files"><span class="header-link"></span></a>6) View Monit log files</h3>
+<pre><code><div class="highlight"><pre><span class="nx">tail</span> <span class="o">-</span><span class="nx">n</span> <span class="mi">50</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/monit.log</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/tomcat-restarting-monitoring-with-monit/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/" class="newer">Newer &#8594;</a><a href="/page/2/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>

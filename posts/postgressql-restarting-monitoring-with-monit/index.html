@@ -1,0 +1,51 @@
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Postgressql (re)starting &amp; monitoring with Monit</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web development, sysadmin, devops, web mapping/GIS and other stuff...</p>
+</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home    </a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><a href="skype:ianscrivener?chat" class="icon-skype"></a><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><div class="post-head group"><a href="/posts/postgressql-restarting-monitoring-with-monit/"><h1 class="post-title">Postgressql (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 15</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">monit</span> <span class="o">-</span><span class="nx">y</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-config-monit-for-postgresql" class="anchor" href="#2-config-monit-for-postgresql"><span class="header-link"></span></a>2) Config Monit for postgresql</h3>
+<p>Create a monit config file for the postgresql init.d service</p>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">monit</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">postgrsql</span><span class="p">.</span><span class="nx">monit</span><span class="p">.</span><span class="nx">conf</span>
+</pre></div>
+</code></pre>
+<p>Append the following </p>
+<pre><code><div class="highlight"><pre><span class="nx">check</span> <span class="nx">process</span> <span class="nx">postgres</span> <span class="kd">with</span> <span class="nx">pidfile</span> <span class="o">/</span><span class="kd">var</span><span class="err">/run/postgresql/9.2-main.pid</span>
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/postgresql start&quot;</span>
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/postgresql stop&quot;</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-check-monit-config-syntax" class="anchor" href="#3-check-monit-config-syntax"><span class="header-link"></span></a>3) Check monit config syntax</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="o">-</span><span class="nx">t</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-restart-monit-to-effect-changes" class="anchor" href="#4-restart-monit-to-effect-changes"><span class="header-link"></span></a>4) Restart monit to effect changes</h3>
+<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">monit</span> <span class="nx">restart</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-check-monit" class="anchor" href="#5-check-monit"><span class="header-link"></span></a>5) Check monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="nx">status</span>
+</pre></div>
+</code></pre>
+<h3><a name="6-view-monit-log-files" class="anchor" href="#6-view-monit-log-files"><span class="header-link"></span></a>6) View Monit log files</h3>
+<pre><code><div class="highlight"><pre><span class="nx">tail</span> <span class="o">-</span><span class="nx">n</span> <span class="mi">50</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/monit.log</span>
+</pre></div>
+</code></pre>
+</div><!-- Social sharing icons--><div class="social"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><div data-size="medium" data-annotation="bubble" data-width="300" class="g-plusone"></div><!--a(href="http://news.ycombinator.com/submit", class="hn-share-button") Vote on HN--></div><!-- Disqus comments, Make sure to replace `colinwren` with your account name in the Disqus helper script below--><div id="comments"><div id="disqus_thread"></div></div><!-- Helper scripts for social share icons--><!-- Hacker News--><script type="text/javascript">(function(d, t) {
+  var g = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+  g.src = '//hnbutton.appspot.com/static/hn.min.js';
+  s.parentNode.insertBefore(g, s);
+}(document, 'script'));
+</script><!-- Twitter--><script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script><!-- Google Plus--><script type="text/javascript">(function() {
+  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+  po.src = 'https://apis.google.com/js/plusone.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script><!-- Disqus--><script type="text/javascript">var disqus_shortname = 'ianscrivener'; // Change this to your Disqus account name
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>

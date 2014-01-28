@@ -4,7 +4,40 @@
 <strong>angular.js</strong>, and <em>d3.js</em>), <em>SQL</em> &amp; <em>noSQL</em> <strong>databases</strong> (<em>mySQL</em>, <em>PostgresSQL</em>, <em>MSSQL</em>, <em>MongoDB</em>, <em>CouchDB</em> etc)</p>
 <p>Jan 2014: Looking for new projects - <a href="/contact.html">contact me</a></p>
 <p><a href="/about.html">...more</a></p>
-</div></div><div class="post-head group"><a href="/posts/installing-geoserver-in-docker/"><h1 class="post-title">Installing Geoserver in Docker</h1></a><span class="post-date">2013 &#183; 12 &#183; 4</span></div><div class="post-body markdown"><p>Docker is an exciting new (in January 2014 anyway) technology I can see that I&#39;ll be using a lot! I love the idea of a quarrantined machine that reuses the host machine&#39;s kernel etc, rather than duplicating them like traditional a virtual machines (VMWare,VirtualBox) do. Smaller foot print and removes all the bloat.</p>
+</div></div><div class="post-head group"><a href="/posts/install-etckeeper-to-backup-ubuntu-application-setup/"><h1 class="post-title">Install etckeeper to backup Ubuntu application setup</h1></a><span class="post-date">2013 &#183; 12 &#183; 12</span></div><div class="post-body markdown"><p><strong>etckeeper</strong> saves your Ubuntu package configuration using a version control (Git, Subversion, Bazaar, Mercurial etc). Everytime you add/remove/update apt/aptitude packages etckeeper automagically commits the changes to version control. </p>
+<p>Ever need to quickly roll-back Ubuntu to s previous application setup state. Yeah.. me too!!</p>
+<h3><a name="install" class="anchor" href="#install"><span class="header-link"></span></a>Install</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">etckeeper</span>
+</pre></div>
+</code></pre>
+<h3><a name="not-really-optional-change-to-git-version-control-system" class="anchor" href="#not-really-optional-change-to-git-version-control-system"><span class="header-link"></span></a>(not really optional) Change to Git version Control System</h3>
+<p>I use Git (doesn&#39;t everyone?!)... so switch verison control to Git from Bazaar</p>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">etckeeper</span><span class="o">/</span><span class="nx">etckeeper</span><span class="p">.</span><span class="nx">conf</span>     
+</pre></div>
+</code></pre>
+<p>Change from</p>
+<pre><code><div class="highlight"><pre>    <span class="err">#</span> <span class="nx">The</span> <span class="nx">VCS</span> <span class="nx">to</span> <span class="nx">use</span><span class="p">.</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;hg&quot;</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;git&quot;</span>
+    <span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;bzr&quot;</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;darcs&quot;</span>
+</pre></div>
+</code></pre>
+<p>To</p>
+<pre><code><div class="highlight"><pre>    <span class="err">#</span> <span class="nx">The</span> <span class="nx">VCS</span> <span class="nx">to</span> <span class="nx">use</span><span class="p">.</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;hg&quot;</span>
+    <span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;git&quot;</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;bzr&quot;</span>
+    <span class="err">#</span><span class="nx">VCS</span><span class="o">=</span><span class="s2">&quot;darcs&quot;</span>
+</pre></div>
+</code></pre>
+<h3><a name="initalise-the-etckeeper-system" class="anchor" href="#initalise-the-etckeeper-system"><span class="header-link"></span></a>Initalise the etckeeper system</h3>
+<pre><code><div class="highlight"><pre><span class="nx">etckeeper</span> <span class="nx">init</span>
+</pre></div>
+</code></pre>
+<h3><a name="so-what-do-it-do" class="anchor" href="#so-what-do-it-do"><span class="header-link"></span></a>So what do it do?!</h3>
+<p>Marvel at the new Git repository in <code>/etc/.git/</code></p>
+</div><div class="comments"><a href="/posts/install-etckeeper-to-backup-ubuntu-application-setup/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/installing-geoserver-in-docker/"><h1 class="post-title">Installing Geoserver in Docker</h1></a><span class="post-date">2013 &#183; 12 &#183; 4</span></div><div class="post-body markdown"><p>Docker is an exciting new (in January 2014 anyway) technology I can see that I&#39;ll be using a lot! I love the idea of a quarrantined machine that reuses the host machine&#39;s kernel etc, rather than duplicating them like traditional a virtual machines (VMWare,VirtualBox) do. Smaller foot print and removes all the bloat.</p>
 <p>Before we start you need to have Docker installed already.. if you don&#39;t head over to the Docker website, they have great instructions on how to <a href="http://www.docker.io/gettingstarted/">install Docker</a>.</p>
 <p>I strongly prefer the <strong>OpenGeo</strong> distribution of Geoserver; it install and configs a bunch of stuff to save us time/effort - for example; postgresql 9.3, postgis 2.1, geowebcache, gdal tools etc.</p>
 <p>Warning: geoserver instalation is known to be tricky/problematic. Especially the glad part. Plus, OpenGeo is only supported on 12.04. Trying to install on 12.10 may cause you a mountain of punish.</p>
@@ -117,47 +150,80 @@
 <pre><code><div class="highlight"><pre><span class="nx">docker</span> <span class="nx">rmi</span> <span class="o">&lt;</span><span class="nx">image_name</span><span class="o">&gt;</span>
 </pre></div>
 </code></pre>
-</div><div class="comments"><a href="/posts/installing-geoserver-in-docker/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/admin-postgresql-securely-on-windows-with-pgadminiii-via-ssh/"><h1 class="post-title">Admin Postgresql securely on Windows with pgAdminIII via SSH</h1></a><span class="post-date">2012 &#183; 8 &#183; 4</span></div><div class="post-body markdown"><p><em>Intro</em></p>
-<p><br/> <strong>(1) Download &amp; install pgadminIII</strong></p>
-<p><a href="http://www.pgadmin.org/download/"><a href="http://www.pgadmin.org/download/">http://www.pgadmin.org/download/</a></a></p>
-<p><br/> <strong>(2) Download &amp; install SecureCRT</strong></p>
-<p><a href="http://www.vandyke.com/download/index.html"><a href="http://www.vandyke.com/download/index.html">http://www.vandyke.com/download/index.html</a></a></p>
-<p><br/> <strong>(3) Create a SSH tunnel for port 5432</strong></p>
-<p><img src="images/1.png" alt="screenshot"></p>
-<p><br/> <strong>(4) connect to posgresql with pgadmin</strong></p>
-<p>Note: if you need to access more than 1 posgresql database server then change the port numbers for the SSH tunnel &amp; pgadminIII connection, eg 5433</p>
-<p><img src="images/2.png" alt="screenshot"></p>
-</div><div class="comments"><a href="/posts/admin-postgresql-securely-on-windows-with-pgadminiii-via-ssh/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/setting-up-your-first-basic-node-js-web-application/"><h1 class="post-title">Setting up your first basic node.js web application</h1></a><span class="post-date">2011 &#183; 11 &#183; 3</span></div><div class="post-body markdown"><h1><a name="setting-up-a-basic-node-js-web-application-on-ubuntu" class="anchor" href="#setting-up-a-basic-node-js-web-application-on-ubuntu"><span class="header-link"></span></a>Setting up a basic node.js web application on Ubuntu</h1>
-<p>This really the first thing to try after you&#39;ve installed node.js on Ubuntu.</p>
-<p><br/><strong>Install the express &amp; nodemon node.js modules</strong></p>
-<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">express</span> <span class="o">-</span><span class="nx">g</span>
-<span class="nx">npm</span> <span class="nx">install</span> <span class="nx">nodemon</span> <span class="o">-</span><span class="nx">g</span>
+</div><div class="comments"><a href="/posts/installing-geoserver-in-docker/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/config-a-node-js-connector-for-postgresql/"><h1 class="post-title">Config a node.js connector for postgresql</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: since writing this post I have swithex (wholeheartedly) to using sss for all my node.js database connections (specifically mySQL, postgresql &amp; mongoDB).</p>
+<h3><a name="1-install-ubuntu-pg-driver" class="anchor" href="#1-install-ubuntu-pg-driver"><span class="header-link"></span></a>1) install ubuntu pg driver</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">libpq</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
 </code></pre>
-<p><br/><strong>Make a directory &amp; change to that directory</strong></p>
-<pre><code><div class="highlight"><pre><span class="nx">mkdir</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">node</span>
-<span class="nx">cd</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">node</span>
+<h3><a name="2-npm-install-node-js-pg-driver" class="anchor" href="#2-npm-install-node-js-pg-driver"><span class="header-link"></span></a>2) npm install node.js pg driver</h3>
+<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">pg</span>
 </pre></div>
 </code></pre>
-<p><br/><strong>Create an express node.js application</strong></p>
-<pre><code><div class="highlight"><pre><span class="nx">express</span> <span class="nx">testapp</span>
-<span class="nx">cd</span> <span class="nx">testapp</span>
+<h3><a name="3-install-pg-orm-module" class="anchor" href="#3-install-pg-orm-module"><span class="header-link"></span></a>3) Install PG ORM Module</h3>
+<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">orm</span>
 </pre></div>
 </code></pre>
-<p><br/><strong>Start the node.js test web application</strong></p>
-<pre><code><div class="highlight"><pre><span class="nx">nodemon</span> <span class="nx">app</span><span class="p">.</span><span class="nx">js</span>
+<h3><a name="4-test-that-the-pg-drivers-works-ok" class="anchor" href="#4-test-that-the-pg-drivers-works-ok"><span class="header-link"></span></a>4) Test that the pg drivers works OK</h3>
+<pre><code><div class="highlight"><pre><span class="kd">var</span> <span class="nx">pg</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pg&#39;</span><span class="p">);</span> 
+<span class="c1">//or native libpq bindings</span>
+<span class="c1">//var pg = require(&#39;pg&#39;).native</span>
+
+<span class="c1">//var conString = &quot;tcp://postgres:1234@localhost/postgres&quot;;</span>
+
+<span class="kd">var</span> <span class="nx">conString</span><span class="o">=</span> <span class="s2">&quot;tcp://opengeo:opengeo@localhost/bmrg&quot;</span><span class="p">;</span>
+
+
+<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">pg</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="nx">conString</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;could not connect to postgres&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;SELECT NOW() AS &quot;theTime&quot;&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;error running query&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">theTime</span><span class="p">);</span>
+    <span class="c1">//output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">});</span>
 </pre></div>
 </code></pre>
-<p>this should return something like.. indicating success</p>
-<pre><code><div class="highlight"><pre><span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">v0</span><span class="p">.</span><span class="mf">7.8</span>
-<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">to</span> <span class="nx">restart</span> <span class="nx">at</span> <span class="nx">any</span> <span class="nx">time</span><span class="p">,</span> <span class="nx">enter</span> <span class="err">`</span><span class="nx">rs</span><span class="err">`</span>
-<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">watching</span><span class="o">:</span> <span class="err">/home/webapp/node/test-app</span>
-<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">starting</span> <span class="err">`</span><span class="nx">node</span> <span class="nx">app</span><span class="p">.</span><span class="nx">js</span><span class="err">`</span>
-<span class="nx">Express</span> <span class="nx">server</span> <span class="nx">listening</span> <span class="nx">on</span> <span class="nx">port</span> <span class="mi">3000</span>
+<p><strong>Result should be like:</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">Mon</span> <span class="nx">Apr</span> <span class="mi">15</span> <span class="mi">2013</span> <span class="mi">08</span><span class="o">:</span><span class="mi">22</span><span class="o">:</span><span class="mi">01</span> <span class="nx">GMT</span><span class="o">+</span><span class="mi">0000</span> <span class="p">(</span><span class="nx">UTC</span><span class="p">)</span>
 </pre></div>
 </code></pre>
-<p><br/><strong>check that it is running OK with web browser</strong></p>
-<p><strong><a href="http://xxx.xxx.xxx.xxx:3000/"><a href="http://xxx.xxx.xxx.xxx:3000/">http://xxx.xxx.xxx.xxx:3000/</a></a></strong></p>
-<p>You should see the basic &#39;Welcome to Express&#39; page.</p>
-<p>Congratualtions... your first node.js steps!!</p>
-</div><div class="comments"><a href="/posts/setting-up-your-first-basic-node-js-web-application/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>
+</div><div class="comments"><a href="/posts/config-a-node-js-connector-for-postgresql/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/"><h1 class="post-title">Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Opengeo is a bundled suite of applications for making custom maps &amp; dpoing spatial processing. Includes</p>
+<ul>
+<li><strong>geoserver</strong>: an excellent opensource map server</li>
+<li><strong>postgis</strong>: an extension for postgresql database tohat offers advanced spatial processing &amp; spatial data storage</li>
+<li><strong>Openlayers</strong>: an excellent javascript framework for web mapping</li>
+<li><strong>GeoExt</strong>: Extentsion to Ext javascript framework</li>
+<li><strong>geowebcache</strong>: image tile cache, seed-on-demand &amp; pre-seeding. Can also proxy map tiles from Google Maps, OSM etc)</li>
+<li>... some magic &amp; glue to bring it all together</li>
+</ul>
+<p><br/>
+I&#39;ve used a 512Mb server for HROK, this is enough for development, but for production servers the geoserver (java/Tomcat) and postgresql processing can be significant... drawing maps, spatial calculations etc, so I&#39;d usually go to 2048Mb sized cloud server. </p>
+<h3><a name="install-steps" class="anchor" href="#install-steps"><span class="header-link"></span></a>Install Steps</h3>
+<p><br/>
+Grab the OpenGeo GPG Apt key</p>
+<pre><code><div class="highlight"><pre><span class="nx">wget</span> <span class="o">-</span><span class="nx">qO</span><span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//apt.opengeo.org/gpg.key | apt-key add -</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Add the APT repository</p>
+<pre><code><div class="highlight"><pre><span class="nx">echo</span> <span class="s2">&quot;deb http://apt.opengeo.org/suite/v3/ubuntu lucid main&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/etc/apt/sources.list</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Update APT &amp; install opengeo-suite</p>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">opengeo</span><span class="o">-</span><span class="nx">suite</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Browse to the geoserver admin to make sure it all worked</p>
+<pre><code><div class="highlight"><pre><span class="nx">http</span><span class="o">:</span><span class="c1">//xxx.xxx.xxx.xxx:8080/geoserver/index.html</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/page/1/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>

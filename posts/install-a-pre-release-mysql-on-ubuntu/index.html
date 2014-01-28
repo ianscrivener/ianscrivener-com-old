@@ -1,0 +1,92 @@
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Install a pre-release mySQL on Ubuntu</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web development, sysadmin, devops, web mapping/GIS and other stuff...</p>
+</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home    </a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><a href="skype:ianscrivener?chat" class="icon-skype"></a><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><div class="post-head group"><a href="/posts/install-a-pre-release-mysql-on-ubuntu/"><h1 class="post-title">Install a pre-release mySQL on Ubuntu</h1></a><span class="post-date">2012 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: This How-To was written to install mySQL 5.6 on Ubuntu 12.04 LTS. At the time mySQL 5.4 was the standard release available via apt/aptitude on Ubuntu. Though this process is a good guide to installing other pre-release mySQL versions on other Ubuntu version.</p>
+<h3><a name="1-ensure-a-thorough-uninstall-of-old-mysql-version" class="anchor" href="#1-ensure-a-thorough-uninstall-of-old-mysql-version"><span class="header-link"></span></a>1) Ensure a thorough uninstall of old mySQL version</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">remove</span> <span class="o">--</span><span class="nx">purge</span> <span class="nx">mysql</span><span class="o">-</span><span class="nx">server</span>
+
+<span class="err">#</span><span class="nx">uninstall</span> <span class="nx">apparmour</span> <span class="nx">as</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">known</span> <span class="nx">to</span> <span class="nx">argue</span> <span class="kd">with</span> <span class="nx">mysql</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">remove</span> <span class="nx">apparmour</span>
+
+<span class="err">#</span> <span class="nx">major</span> <span class="nx">apt</span> <span class="nx">spring</span> <span class="nx">clean</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">autoremove</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">clean</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">purge</span>
+
+<span class="err">#</span> <span class="nx">make</span> <span class="nx">sure</span> <span class="nx">there</span> <span class="nx">are</span> <span class="nx">no</span> <span class="nx">mySQL</span> <span class="nx">leftovers</span>
+<span class="nx">find</span> <span class="o">/</span> <span class="o">-</span><span class="nx">iname</span> <span class="nx">mysql</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-install-mysql-5-6" class="anchor" href="#2-install-mysql-5-6"><span class="header-link"></span></a>2) Install mysql 5.6</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">libaio</span><span class="o">-</span><span class="nx">dev</span>
+
+<span class="err">#</span><span class="nx">get</span> <span class="nx">the</span> <span class="nx">deb</span>
+<span class="nx">cd</span> <span class="o">/</span><span class="nx">tmp</span>
+<span class="nx">wget</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.12-debian6.0-x86_64.deb/from/http://cdn.mysql.com/</span>
+<span class="nx">mv</span> <span class="nx">index</span><span class="p">.</span><span class="nx">html</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+
+<span class="err">#</span> <span class="nx">install</span> <span class="nx">deb</span>
+<span class="nx">dpkg</span> <span class="o">-</span><span class="nx">i</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+<span class="err">#</span> <span class="k">delete</span> <span class="nx">the</span> <span class="nx">install</span> <span class="nx">file</span>
+<span class="nx">rm</span> <span class="nx">mysql5</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="nx">deb</span>
+
+<span class="err">#</span> <span class="nx">add</span> <span class="nx">group</span> <span class="o">&amp;</span> <span class="nx">user</span>
+<span class="nx">groupadd</span> <span class="nx">mysql</span>
+<span class="nx">useradd</span> <span class="o">-</span><span class="nx">r</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">mysql</span> <span class="nx">mysql</span>
+
+
+<span class="err">#</span> <span class="kr">goto</span> <span class="nx">the</span> <span class="nx">install</span> <span class="nx">directory</span>
+<span class="nx">cd</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">mysql</span><span class="o">/</span><span class="nx">server</span><span class="o">-</span><span class="mf">5.6</span>
+
+<span class="err">#</span> <span class="nx">create</span> <span class="nx">directory</span> <span class="k">for</span> <span class="nx">data</span> <span class="o">&amp;</span> <span class="nx">chown</span> <span class="nx">it</span> <span class="nx">msql</span>
+<span class="nx">mkdir</span> <span class="nx">data</span>
+<span class="nx">chown</span> <span class="nx">mysql</span><span class="o">:</span><span class="nx">mysql</span> <span class="nx">data</span>
+
+<span class="err">#</span> <span class="nx">run</span> <span class="nx">install</span> <span class="nx">script</span>
+<span class="nx">scripts</span><span class="o">/</span><span class="nx">mysql_install_db</span> <span class="o">--</span><span class="nx">user</span><span class="o">=</span><span class="nx">mysql</span>
+
+<span class="err">#</span> <span class="nx">move</span> <span class="nx">the</span> <span class="nx">config</span> <span class="nx">files</span> <span class="nx">t</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">places</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">my</span><span class="o">-</span><span class="k">default</span><span class="p">.</span><span class="nx">cnf</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">my</span><span class="p">.</span><span class="nx">cnf</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span>
+<span class="nx">cp</span> <span class="nx">support</span><span class="o">-</span><span class="nx">files</span><span class="o">/</span><span class="nx">mysql</span><span class="o">-</span><span class="nx">log</span><span class="o">-</span><span class="nx">rotate</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">logrotate</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span>
+
+<span class="err">#</span> <span class="nx">config</span> <span class="nx">PATH</span> <span class="nx">so</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">run</span> <span class="s1">&#39;mysql&#39;</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">any</span> <span class="nx">path</span>
+<span class="nx">echo</span> <span class="kr">export</span> <span class="nx">PATH</span><span class="o">=</span><span class="nx">$PATH</span><span class="o">:</span><span class="err">/opt/mysql/server-5.6/bin</span>
+
+<span class="err">#</span> <span class="nx">you</span> <span class="nx">may</span> <span class="nx">need</span> <span class="nx">to</span> <span class="nx">restart</span> <span class="nx">you</span> <span class="nx">CLI</span> <span class="nx">client</span> <span class="k">for</span> <span class="nx">path</span> <span class="nx">to</span> <span class="nx">take</span> <span class="nx">effect</span>
+
+
+<span class="err">#</span><span class="nx">Start</span> <span class="nx">mySQL</span> <span class="mf">5.6</span>
+<span class="nx">service</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">server</span> <span class="nx">start</span>
+<span class="nx">service</span> <span class="nx">mysql</span> <span class="nx">start</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-setup-root-password" class="anchor" href="#3-setup-root-password"><span class="header-link"></span></a>3) Setup root password</h3>
+<pre><code><div class="highlight"><pre><span class="err">/opt/mysql/server-5.6/bin/mysql</span>
+<span class="nx">UPDATE</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">user</span> <span class="nx">SET</span> <span class="nx">Password</span><span class="o">=</span><span class="nx">PASSWORD</span><span class="p">(</span><span class="s1">&#39;Bundaberg1&#39;</span><span class="p">)</span> <span class="nx">WHERE</span> <span class="nx">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;ian&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;sleepyman&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;fred&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;Bundaberg1&#39;</span><span class="p">;</span>
+<span class="nx">GRANT</span> <span class="nx">ALL</span> <span class="nx">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="nx">TO</span> <span class="s1">&#39;geoserver&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="nx">BY</span> <span class="s1">&#39;Bundaberg1&#39;</span><span class="p">;</span>
+<span class="nx">FLUSH</span> <span class="nx">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+</code></pre>
+</div><!-- Social sharing icons--><div class="social"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><div data-size="medium" data-annotation="bubble" data-width="300" class="g-plusone"></div><!--a(href="http://news.ycombinator.com/submit", class="hn-share-button") Vote on HN--></div><!-- Disqus comments, Make sure to replace `colinwren` with your account name in the Disqus helper script below--><div id="comments"><div id="disqus_thread"></div></div><!-- Helper scripts for social share icons--><!-- Hacker News--><script type="text/javascript">(function(d, t) {
+  var g = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+  g.src = '//hnbutton.appspot.com/static/hn.min.js';
+  s.parentNode.insertBefore(g, s);
+}(document, 'script'));
+</script><!-- Twitter--><script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script><!-- Google Plus--><script type="text/javascript">(function() {
+  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+  po.src = 'https://apis.google.com/js/plusone.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script><!-- Disqus--><script type="text/javascript">var disqus_shortname = 'ianscrivener'; // Change this to your Disqus account name
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>

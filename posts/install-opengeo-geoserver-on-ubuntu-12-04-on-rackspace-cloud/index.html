@@ -1,0 +1,53 @@
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web development, sysadmin, devops, web mapping/GIS and other stuff...</p>
+</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home    </a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><a href="skype:ianscrivener?chat" class="icon-skype"></a><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><div class="post-head group"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/"><h1 class="post-title">Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Opengeo is a bundled suite of applications for making custom maps &amp; dpoing spatial processing. Includes</p>
+<ul>
+<li><strong>geoserver</strong>: an excellent opensource map server</li>
+<li><strong>postgis</strong>: an extension for postgresql database tohat offers advanced spatial processing &amp; spatial data storage</li>
+<li><strong>Openlayers</strong>: an excellent javascript framework for web mapping</li>
+<li><strong>GeoExt</strong>: Extentsion to Ext javascript framework</li>
+<li><strong>geowebcache</strong>: image tile cache, seed-on-demand &amp; pre-seeding. Can also proxy map tiles from Google Maps, OSM etc)</li>
+<li>... some magic &amp; glue to bring it all together</li>
+</ul>
+<p><br/>
+I&#39;ve used a 512Mb server for HROK, this is enough for development, but for production servers the geoserver (java/Tomcat) and postgresql processing can be significant... drawing maps, spatial calculations etc, so I&#39;d usually go to 2048Mb sized cloud server. </p>
+<h3><a name="install-steps" class="anchor" href="#install-steps"><span class="header-link"></span></a>Install Steps</h3>
+<p><br/>
+Grab the OpenGeo GPG Apt key</p>
+<pre><code><div class="highlight"><pre><span class="nx">wget</span> <span class="o">-</span><span class="nx">qO</span><span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//apt.opengeo.org/gpg.key | apt-key add -</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Add the APT repository</p>
+<pre><code><div class="highlight"><pre><span class="nx">echo</span> <span class="s2">&quot;deb http://apt.opengeo.org/suite/v3/ubuntu lucid main&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/etc/apt/sources.list</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Update APT &amp; install opengeo-suite</p>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">opengeo</span><span class="o">-</span><span class="nx">suite</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Browse to the geoserver admin to make sure it all worked</p>
+<pre><code><div class="highlight"><pre><span class="nx">http</span><span class="o">:</span><span class="c1">//xxx.xxx.xxx.xxx:8080/geoserver/index.html</span>
+</pre></div>
+</code></pre>
+</div><!-- Social sharing icons--><div class="social"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a><div data-size="medium" data-annotation="bubble" data-width="300" class="g-plusone"></div><!--a(href="http://news.ycombinator.com/submit", class="hn-share-button") Vote on HN--></div><!-- Disqus comments, Make sure to replace `colinwren` with your account name in the Disqus helper script below--><div id="comments"><div id="disqus_thread"></div></div><!-- Helper scripts for social share icons--><!-- Hacker News--><script type="text/javascript">(function(d, t) {
+  var g = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+  g.src = '//hnbutton.appspot.com/static/hn.min.js';
+  s.parentNode.insertBefore(g, s);
+}(document, 'script'));
+</script><!-- Twitter--><script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script><!-- Google Plus--><script type="text/javascript">(function() {
+  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+  po.src = 'https://apis.google.com/js/plusone.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script><!-- Disqus--><script type="text/javascript">var disqus_shortname = 'ianscrivener'; // Change this to your Disqus account name
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>
