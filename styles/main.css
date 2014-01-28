@@ -957,6 +957,11 @@ code {
   margin-bottom: 0;
 }
 
+/* line 100, ../../source/styles/_markdown.scss */
+p {
+  line-height: 1.5em;
+}
+
 /*Icon Set: IcoMoon - Free -- http://keyamoon.com/icomoon/*/
 /*License:  CC BY 3.0 -- http://creativecommons.org/licenses/by/3.0/*/
 /*
@@ -1410,7 +1415,7 @@ nav a:hover {
   float: left;
   padding-right: 120px;
   margin: 0 0 5px;
-  font-size: 1.9em;
+  font-size: 2.1em;
 }
 @media (max-width: 1250px) {
   /* line 12, ../../source/styles/_post.scss */
@@ -1450,15 +1455,16 @@ nav a:hover {
 /* line 47, ../../source/styles/_post.scss */
 .comments {
   margin-top: 1em;
+  margin-bottom: 50px;
   font-weight: bold;
   font-size: 1.2em;
 }
-/* line 52, ../../source/styles/_post.scss */
+/* line 53, ../../source/styles/_post.scss */
 .comments a {
   color: #b8b7b7;
   text-decoration: none;
 }
-/* line 57, ../../source/styles/_post.scss */
+/* line 58, ../../source/styles/_post.scss */
 .comments .icon-bubbles {
   padding: 3px 15px 5px 0;
   float: left;
