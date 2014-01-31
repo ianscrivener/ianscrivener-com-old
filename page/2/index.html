@@ -1,10 +1,63 @@
-<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Ian Scrivener - node.js - angular.js - grunt.js - d3.js - Jade - LESS - SASS - Jade - mySQL - PostgreSQL - mongoDB - Cloud - geoserver - openlayers - leaflet</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web development, javascript, sysadmin, devops, web mapping/GIS ... and other stuff</p>
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Ian Scrivener - node.js - angular.js - grunt.js - d3.js - Jade - LESS - SASS - Jade - mySQL - PostgreSQL - mongoDB - Cloud - geoserver - openlayers - leaflet</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"> <p>a blog by <strong>Ian Scrivener</strong> on web ssss, javascript, sysadmin, devops, web mapping/GIS ... and other stuff</p>
 </div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home    </a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><a href="skype:ianscrivener?chat" class="icon-skype"></a><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><!-- /pages/includes/intro.jade--><div class="z-intro-container"><div class="z-intro"> <img src="/images/me3.png"><p>hi, my name is <strong>Ian Scrivener</strong>. I&#39;m an Australian web technology specifialist, fullstack/backend web developer &amp; cloud sysadmin. I&#39;ve extensive (20 years) experience with medium to large scale web projects for .com, .gov &amp; .org. </p>
 <p>My main weapons include <em>javascript</em> (<strong>node.js</strong>, 
 <strong>angular.js</strong>, and <em>d3.js</em>), <em>SQL</em> &amp; <em>noSQL</em> <strong>databases</strong> (<em>mySQL</em>, <em>PostgresSQL</em>, <em>MSSQL</em>, <em>MongoDB</em>, <em>CouchDB</em> etc)</p>
 <p>Jan 2014: Looking for new projects - <a href="/contact.html">contact me</a></p>
 <p><a href="/about.html">...more</a></p>
-</div></div><div class="post-head group"><a href="/posts/node-js-server-restarting-monitoring-with-monit/"><h1 class="post-title">Node.js server (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
+</div></div><div class="post-head group"><a href="/posts/tomcat-restarting-monitoring-with-monit/"><h1 class="post-title">Tomcat (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">monit</span> <span class="o">-</span><span class="nx">y</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-config-monit-for-tomcat6" class="anchor" href="#2-config-monit-for-tomcat6"><span class="header-link"></span></a>2) Config Monit for tomcat6</h3>
+<p>Create a monit config file for the tomcat6 init.d service</p>
+<pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">monit</span><span class="o">/</span><span class="nx">conf</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">tomcat6</span><span class="p">.</span><span class="nx">monit</span><span class="p">.</span><span class="nx">conf</span>
+</pre></div>
+</code></pre>
+<p>Append the following </p>
+<pre><code><div class="highlight"><pre><span class="nx">check</span> <span class="nx">process</span> <span class="nx">tomcat</span> <span class="kd">with</span> <span class="nx">pidfile</span> <span class="o">/</span><span class="kd">var</span><span class="err">/run/tomcat6.pid</span>
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 start&quot;</span>
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 stop&quot;</span>
+
+
+<span class="nx">check</span> <span class="nx">host</span> <span class="nx">tomcat6</span> <span class="kd">with</span> <span class="nx">address</span> <span class="nx">localhost</span> 
+    <span class="nx">stop</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 stop&quot;</span> 
+    <span class="nx">start</span> <span class="nx">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/tomcat6 restart&quot;</span> 
+    <span class="k">if</span> <span class="nx">failed</span> <span class="nx">port</span> <span class="mi">8080</span> <span class="nx">and</span> <span class="nx">protocol</span> <span class="nx">http</span>           
+        <span class="nx">then</span> <span class="nx">start</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-check-monit-config-syntax" class="anchor" href="#3-check-monit-config-syntax"><span class="header-link"></span></a>3) Check monit config syntax</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="o">-</span><span class="nx">t</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-restart-monit-to-effect-changes" class="anchor" href="#4-restart-monit-to-effect-changes"><span class="header-link"></span></a>4) Restart monit to effect changes</h3>
+<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">monit</span> <span class="nx">restart</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-check-monit" class="anchor" href="#5-check-monit"><span class="header-link"></span></a>5) Check monit</h3>
+<pre><code><div class="highlight"><pre><span class="nx">monit</span> <span class="nx">status</span>
+</pre></div>
+</code></pre>
+<h3><a name="6-view-monit-log-files" class="anchor" href="#6-view-monit-log-files"><span class="header-link"></span></a>6) View Monit log files</h3>
+<pre><code><div class="highlight"><pre><span class="nx">tail</span> <span class="o">-</span><span class="nx">n</span> <span class="mi">50</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/monit.log</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/tomcat-restarting-monitoring-with-monit/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-vmware-on-ubuntu/"><h1 class="post-title">Install VMWare on Ubuntu</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><p>Likely I&#39;ll forget this- so I&#39;ll write it down by way as a reminder. Perhaps someone else finds it useful...</p>
+<h3><a name="1-install-some-prerequisits" class="anchor" href="#1-install-some-prerequisits"><span class="header-link"></span></a>1) Install some prerequisits</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">linux</span><span class="o">-</span><span class="nx">headers</span><span class="o">-</span><span class="nx">$</span><span class="p">(</span><span class="nx">uname</span> <span class="o">-</span><span class="nx">r</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-download-the-vmware-bundle" class="anchor" href="#2-download-the-vmware-bundle"><span class="header-link"></span></a>2) Download the VMWare bundle</h3>
+<p>Vversion 5 at the time of writing) - <a href="https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/5_0">download here</a></p>
+<h3><a name="3-install-run-the-installer-app" class="anchor" href="#3-install-run-the-installer-app"><span class="header-link"></span></a>3) Install &amp; run the installer app</h3>
+<pre><code><div class="highlight"><pre><span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="o">~</span><span class="err">/downloads/VMware-Player-*.bundle</span>
+
+<span class="nx">sudo</span> <span class="p">.</span><span class="o">/</span><span class="nx">VMware</span><span class="o">-</span><span class="nx">Player</span><span class="o">-*</span><span class="p">.</span><span class="nx">bundle</span>
+
+<span class="nx">vmware</span><span class="o">-</span><span class="nx">modconfig</span> <span class="o">--</span><span class="nx">console</span> <span class="o">--</span><span class="nx">install</span><span class="o">-</span><span class="nx">all</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/install-vmware-on-ubuntu/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/node-js-server-restarting-monitoring-with-monit/"><h1 class="post-title">Node.js server (re)starting &amp; monitoring with Monit</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><h3><a name="1-install-monit" class="anchor" href="#1-install-monit"><span class="header-link"></span></a>1) Install monit</h3>
 <pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">monit</span> <span class="o">-</span><span class="nx">y</span>
 </pre></div>
 </code></pre>
@@ -42,22 +95,7 @@
 <pre><code><div class="highlight"><pre><span class="nx">tail</span> <span class="o">-</span><span class="nx">n</span> <span class="mi">50</span> <span class="o">/</span><span class="kd">var</span><span class="err">/log/monit.log</span>
 </pre></div>
 </code></pre>
-</div><div class="comments"><a href="/posts/node-js-server-restarting-monitoring-with-monit/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-vmware-on-ubuntu/"><h1 class="post-title">Install VMWare on Ubuntu</h1></a><span class="post-date">2012 &#183; 4 &#183; 11</span></div><div class="post-body markdown"><p>Likely I&#39;ll forget this- so I&#39;ll write it down by way as a reminder. Perhaps someone else finds it useful...</p>
-<h3><a name="1-install-some-prerequisits" class="anchor" href="#1-install-some-prerequisits"><span class="header-link"></span></a>1) Install some prerequisits</h3>
-<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">linux</span><span class="o">-</span><span class="nx">headers</span><span class="o">-</span><span class="nx">$</span><span class="p">(</span><span class="nx">uname</span> <span class="o">-</span><span class="nx">r</span><span class="p">)</span>
-</pre></div>
-</code></pre>
-<h3><a name="2-download-the-vmware-bundle" class="anchor" href="#2-download-the-vmware-bundle"><span class="header-link"></span></a>2) Download the VMWare bundle</h3>
-<p>Vversion 5 at the time of writing) - <a href="https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/5_0">download here</a></p>
-<h3><a name="3-install-run-the-installer-app" class="anchor" href="#3-install-run-the-installer-app"><span class="header-link"></span></a>3) Install &amp; run the installer app</h3>
-<pre><code><div class="highlight"><pre><span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="o">~</span><span class="err">/downloads/VMware-Player-*.bundle</span>
-
-<span class="nx">sudo</span> <span class="p">.</span><span class="o">/</span><span class="nx">VMware</span><span class="o">-</span><span class="nx">Player</span><span class="o">-*</span><span class="p">.</span><span class="nx">bundle</span>
-
-<span class="nx">vmware</span><span class="o">-</span><span class="nx">modconfig</span> <span class="o">--</span><span class="nx">console</span> <span class="o">--</span><span class="nx">install</span><span class="o">-</span><span class="nx">all</span>
-</pre></div>
-</code></pre>
-</div><div class="comments"><a href="/posts/install-vmware-on-ubuntu/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/setting-up-your-first-basic-node-js-web-application/"><h1 class="post-title">Setting up your first basic node.js web application</h1></a><span class="post-date">2012 &#183; 1 &#183; 4</span></div><div class="post-body markdown"><h1><a name="setting-up-a-basic-node-js-web-application-on-ubuntu" class="anchor" href="#setting-up-a-basic-node-js-web-application-on-ubuntu"><span class="header-link"></span></a>Setting up a basic node.js web application on Ubuntu</h1>
+</div><div class="comments"><a href="/posts/node-js-server-restarting-monitoring-with-monit/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/setting-up-your-first-basic-node-js-web-application/"><h1 class="post-title">Setting up your first basic node.js web application</h1></a><span class="post-date">2012 &#183; 1 &#183; 4</span></div><div class="post-body markdown"><h1><a name="setting-up-a-basic-node-js-web-application-on-ubuntu" class="anchor" href="#setting-up-a-basic-node-js-web-application-on-ubuntu"><span class="header-link"></span></a>Setting up a basic node.js web application on Ubuntu</h1>
 <p>This really the first thing to try after you&#39;ve installed node.js on Ubuntu.</p>
 <p><br/><strong>Install the express &amp; nodemon node.js modules</strong></p>
 <pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">express</span> <span class="o">-</span><span class="nx">g</span>
@@ -90,59 +128,4 @@
 <p><strong><a href="http://xxx.xxx.xxx.xxx:3000/"><a href="http://xxx.xxx.xxx.xxx:3000/">http://xxx.xxx.xxx.xxx:3000/</a></a></strong></p>
 <p>You should see the basic &#39;Welcome to Express&#39; page.</p>
 <p>Congratualtions... your first node.js steps!!</p>
-</div><div class="comments"><a href="/posts/setting-up-your-first-basic-node-js-web-application/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-jetty-and-geoserver-on-ubuntu-12-04/"><h1 class="post-title">Install jetty and geoserver on Ubuntu 12.04</h1></a><span class="post-date">2011 &#183; 12 &#183; 1</span></div><div class="post-body markdown"><p>My J2EE preference for Geoserver/OpenGeo is Jetty over Tomcat. here&#39;s how to set it up.</p>
-<h3><a name="1-install-setup-openjdk" class="anchor" href="#1-install-setup-openjdk"><span class="header-link"></span></a>1) install &amp; setup openJDK</h3>
-<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">openjdk</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="nx">jdk</span>
-<span class="nx">mkdir</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">java</span>
-<span class="err">#</span> <span class="nx">setup</span> <span class="nx">a</span> <span class="nx">symbolic</span> <span class="nx">link</span> <span class="nx">from</span> <span class="nx">your</span> <span class="nx">openJDK</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">java</span> <span class="nx">path</span> <span class="nx">that</span> <span class="nx">jetty</span> <span class="nx">looks</span> <span class="k">for</span> 
-<span class="nx">ln</span> <span class="o">-</span><span class="nx">s</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">jvm</span><span class="o">/</span><span class="nx">java</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="nx">openjdk</span><span class="o">-</span><span class="nx">amd64</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">java</span><span class="o">/</span><span class="k">default</span>
-</pre></div>
-</code></pre>
-<h3><a name="2-install-jetty" class="anchor" href="#2-install-jetty"><span class="header-link"></span></a>2) install jetty</h3>
-<pre><code><div class="highlight"><pre><span class="nx">cd</span> <span class="o">/</span><span class="nx">opt</span>
-<span class="nx">wget</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//mirrors.ustc.edu.cn/eclipse/jetty/stable-9/dist/jetty-distribution-9.0.4.v20130625.zip</span>
-<span class="nx">unzip</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
-<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
-<span class="nx">mv</span> <span class="nx">jetty</span><span class="o">-</span><span class="nx">distribution</span><span class="o">-</span><span class="mf">9.0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="nx">v20130625</span><span class="o">/</span> <span class="nx">jetty</span>
-<span class="nx">useradd</span> <span class="nx">jetty</span> <span class="o">-</span><span class="nx">U</span> <span class="o">-</span><span class="nx">s</span> <span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="kc">false</span>
-<span class="nx">chown</span> <span class="o">-</span><span class="nx">R</span> <span class="nx">jetty</span><span class="o">:</span><span class="nx">jetty</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">jetty</span>
-</pre></div>
-</code></pre>
-<h3><a name="3-create-the-jetty-service" class="anchor" href="#3-create-the-jetty-service"><span class="header-link"></span></a>3) create the jetty service</h3>
-<pre><code><div class="highlight"><pre><span class="nx">cp</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">jetty</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">jetty</span><span class="p">.</span><span class="nx">sh</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">jetty</span>
-<span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="k">default</span><span class="err">/jetty # and copy the content below</span>
-</pre></div>
-</code></pre>
-<h3><a name="4-add-the-following-to-etcinit-djetty-save-close" class="anchor" href="#4-add-the-following-to-etcinit-djetty-save-close"><span class="header-link"></span></a>4) add the following to /etc/init.d/jetty, save, close</h3>
-<pre><code><div class="highlight"><pre><span class="nx">JAVA_HOME</span><span class="o">=</span><span class="err">/usr/java/default</span>
-<span class="nx">NO_START</span><span class="o">=</span><span class="mi">0</span>
-<span class="nx">JETTY_HOST</span><span class="o">=</span><span class="mf">0.0</span><span class="p">.</span><span class="mf">0.0</span>
-<span class="nx">JETTY_PORT</span><span class="o">=</span><span class="mi">8000</span>
-<span class="nx">JETTY_USER</span><span class="o">=</span><span class="nx">jetty</span>
-</pre></div>
-</code></pre>
-<h3><a name="5-register-the-startup-service" class="anchor" href="#5-register-the-startup-service"><span class="header-link"></span></a>5) register the startup service</h3>
-<pre><code><div class="highlight"><pre><span class="nx">update</span><span class="o">-</span><span class="nx">rc</span><span class="p">.</span><span class="nx">d</span> <span class="nx">jetty</span> <span class="nx">defaults</span>
-</pre></div>
-</code></pre>
-<h3><a name="6-start-jetty" class="anchor" href="#6-start-jetty"><span class="header-link"></span></a>6) start jetty</h3>
-<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">jetty</span> <span class="nx">start</span>
-</pre></div>
-</code></pre>
-<h3><a name="7-check-its-all-ok-in-your-web-browser" class="anchor" href="#7-check-its-all-ok-in-your-web-browser"><span class="header-link"></span></a>7) check its all OK in your web browser</h3>
-<p><a href="http://localhost:8000" title="http://localhost:8000"><a href="http://localhost:8000">http://localhost:8000</a></a></p>
-<h3><a name="8-install-geoserver" class="anchor" href="#8-install-geoserver"><span class="header-link"></span></a>8) Install geoserver</h3>
-<p>if you already have installed geoserver on tomcat you can do this</p>
-<pre><code><div class="highlight"><pre><span class="nx">cp</span> <span class="o">/</span><span class="kd">var</span><span class="err">/lib/tomcat6/webapps/geoserver.war /opt/jetty/webapps/</span>
-<span class="nx">service</span> <span class="nx">jetty</span> <span class="nx">restart</span>
-</pre></div>
-</code></pre>
-<p>or else, 
-    cd /opt/jetty/webapps
-    wget <a href="http://sourceforge.net/projects/geoserver/files/GeoServer/2.3.4/geoserver-2.3.4-war.zip">http://sourceforge.net/projects/geoserver/files/GeoServer/2.3.4/geoserver-2.3.4-war.zip</a></p>
-<pre><code><div class="highlight"><pre><span class="nx">unzip</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
-<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">txt</span>
-<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
-</pre></div>
-</code></pre>
-</div><div class="comments"><a href="/posts/install-jetty-and-geoserver-on-ubuntu-12-04/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/page/1/" class="newer">Newer &#8594;</a><a href="/page/3/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>
+</div><div class="comments"><a href="/posts/setting-up-your-first-basic-node-js-web-application/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/page/1/" class="newer">Newer &#8594;</a><a href="/page/3/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>// Add your analytics code here</script></body></html>
