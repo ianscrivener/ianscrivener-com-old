@@ -19,11 +19,11 @@ docker inspect <span class="nv">$ID</span> <span class="p">|</span> grep IPAddre
 <pre><code class="lang-bash"><div class="highlight"><pre>docker tag ubuntu <span class="nv">$USER</span>/geoserver geoserver
 </pre></div>
 </code></pre>
-<p><strong>(3) Run you own named Docket Image</strong></p>
+<p><strong>(3) Run you own named Docker Image</strong></p>
 <pre><code class="lang-bash"><div class="highlight"><pre>docker run -i -t z-geoserver /bin/bash
 </pre></div>
 </code></pre>
-<p><strong>(4) List running Docker machines</strong> </p>
+<p><strong>(4) List running Docker Machines</strong> </p>
 <pre><code class="lang-bash"><div class="highlight"><pre>sudo docker ps
 </pre></div>
 </code></pre>
@@ -31,7 +31,7 @@ docker inspect <span class="nv">$ID</span> <span class="p">|</span> grep IPAddre
 <pre><code class="lang-bash"><div class="highlight"><pre>sudo docker ps -a -q
 </pre></div>
 </code></pre>
-<p><strong>(6) Create a easy to use alias for a Docker image</strong></p>
+<p><strong>(6) Create a easy to use alias for a Docker Image</strong></p>
 <pre><code class="lang-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">ID</span><span class="o">=</span>1ecb8830ba6c
 <span class="nb">echo</span> <span class="nv">$ID</span>
 </pre></div>
@@ -40,15 +40,15 @@ docker inspect <span class="nv">$ID</span> <span class="p">|</span> grep IPAddre
 <pre><code class="lang-bash"><div class="highlight"><pre>sudo docker start <span class="nv">$ID</span>
 </pre></div>
 </code></pre>
-<p><strong>(8) Stop a Docker image</strong></p>
+<p><strong>(8) Stop a Docker Image</strong></p>
 <pre><code class="lang-bash"><div class="highlight"><pre>docker stop 1ecb8830ba6c
 </pre></div>
 </code></pre>
-<p><strong>(9) Connect to (attached console to) a runnign Docker container</strong></p>
+<p><strong>(9) Connect to (attached console to) a running Docker Container</strong></p>
 <pre><code class="lang-bash"><div class="highlight"><pre>docker attach <span class="nv">$CONTAINER_ID</span>
 </pre></div>
 </code></pre>
-<p><strong>(10) List the Docker images I have installed</strong></p>
+<p><strong>(10) List the Docker Images I have installed</strong></p>
 <pre><code class="lang-bash"><div class="highlight"><pre>sudo docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 ubuntu              12.04               8dbd9e392a96        9 months ago        128 MB
