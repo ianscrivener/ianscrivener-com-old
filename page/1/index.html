@@ -1,5 +1,5 @@
 <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&--><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="icon" type="image/png" href="/images/cabin.png"><link href="/styles/main.css" rel="stylesheet"><title>Ian Scrivener - node.js - angular.js - grunt.js - d3.js - mean.js - Jade - LESS - SASS - Jade - mySQL - PostgreSQL - mongoDB - redis - Cloud - geoserver - openlayers - leaflet.js</title></head><body><nav><div class="devil"><a href="/" class="icon-evil logo-icon"></a></div><h1 class="name"><a href="/">@ianscrivener</a></h1><div class="menu icon-menu"></div><div class="blurb z-desktop-only"><p>a blog by <strong>Ian Scrivener</strong> on web, javascript, sysadmin, devops, web mapping, GIS... and other stuff</p>
-</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home</a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><!--a.icon-skype(href="skype:ianscrivener?chat")--><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><!-- /pages/includes/intro.jade--><div class="z-intro-container"><div class="z-intro"> <img src="/images/me3.png"><p>hi, my name is <strong>Ian Scrivener</strong>. I&#39;m an Australian web technology specialist, fullstack/backend web developer &amp; cloud sysadmin. I&#39;ve extensive (22 years) experience with medium to large scale web projects for .com, .gov &amp; .org.</p>
+</div><ul class="nav-links"><li class="text-link z-device-only"><a href="/">home</a></li><li class="text-link"><a href="/archives.html">posts</a></li><li class="text-link"><a href="/about.html">about</a></li></ul><div class="social-media"><a href="mailto:blog@zilogy.asia?Subject=Touching base from your blog on ianscrivener.com" class="icon-envelope"></a><a target="_blank" href="http://www.linkedin.com/profile/view?id=13137105" class="icon-linkedin"></a><a target="_blank" href="https://github.com/ianscrivener" class="icon-github"></a><!--a.icon-skype(href="skype:ianscrivener?chat")--><!--include ../pages/includes/skype-link.html--><!--a.icon-menu(href="http://www.linkedin.com/profile/view?id=13137105")--><!--a.icon-twitter(href="https://twitter.com/ianscrivener")--></div></nav><div class="content"><!-- /pages/includes/intro.jade--><div class="z-intro-container"><div class="z-intro"> <img src="/images/me3.png"><p>hi, my name is <strong>Ian Scrivener</strong>. I&#39;m an Australian web technology specialist, fullstack/backend javascript web developer &amp; cloud sysadmin. I&#39;ve extensive (23 years) experience with medium to large scale web projects for .com, .gov &amp; .org.</p>
 <p>My main weapons include <em>javascript</em>; <strong>node.js</strong>,
 <strong>angular.js</strong>, <em>d3.js</em> and <em>mean.js</em>, with <em>SQL</em> &amp; <em>noSQL</em> <strong>databases</strong>; <em>mySQL</em>, <em>PostgresSQL</em>, <em>MSSQL</em>, <em>MongoDB</em>, <em>CouchDB</em>, <em>redis</em> etc
 <br/></p>
@@ -10,7 +10,111 @@
 
 <p><br/></p>
 <!--a href="/contact.html">contact me</a-->
-</div></div><div class="post-head group"><a href="/posts/product-evangelist-versus-solution-scientist/"><h1 class="post-title">Product Evangelist versus Solution Scientist</h1></a><span class="post-date">2014 &#183; 2 &#183; 7</span></div><div class="post-body markdown"><p>A few conversations this week got me thinking about the way we look at, present, promote and even argue our ideas and solutions our work roles... and the kind of outcomes and efficiencies that results</p>
+</div></div><div class="post-head group"><a href="/posts/grunt-exec-with-callback/"><h1 class="post-title">grunt exec with callback</h1></a><span class="post-date">2014 &#183; 2 &#183; 9</span></div><div class="post-body markdown"><p>Highlighting grunt exec with callback. Another one for grunt geeks only... so no apologies for source code only approach.</p>
+<pre><code><div class="highlight"><pre>    <span class="nx">exec</span><span class="o">:</span> <span class="p">{</span>            
+        <span class="c1">//get IP &amp; Set a local variable</span>
+        <span class="nx">get_ip</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">command</span><span class="o">:</span> <span class="s1">&#39;ifconfig | grep -m 1 &quot;inet addr:192.168.1&quot; | cut -c21-31&#39;</span><span class="p">,</span>
+            <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">error</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">grunt</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;exec error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+                <span class="p">};</span>
+                <span class="nx">globalConfig</span><span class="p">.</span><span class="nx">myIP</span> <span class="o">=</span> <span class="nx">stdout</span><span class="p">;</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;set myIP:&#39;</span><span class="p">,</span> <span class="nx">globalConfig</span><span class="p">.</span><span class="nx">myIP</span><span class="p">);</span>
+            <span class="p">},</span>
+            <span class="nx">stdout</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nx">stderr</span><span class="o">:</span> <span class="kc">false</span>            
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/grunt-exec-with-callback/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/grunt-browser-open-and-reload-with-ip-instead-of-localhost/"><h1 class="post-title">grunt: browser open and reload with ip instead of localhost</h1></a><span class="post-date">2014 &#183; 2 &#183; 8</span></div><div class="post-body markdown"><p>This one is for grunt geeks only... so no apologies for source code only approach.</p>
+<p>Why not use <code>localhost</code>? Because often I use <strong><a href="https://chrome.google.com/webstore/detail/chrome-to-mobile/idknbmbdnapjicclomlijcgfpikmndhd?hl=en">Chome To Mobile</a></strong> to push a website I&#39;m working on for review to my tablet or mobile.. so localhost just ain&#39;t good enough.</p>
+<pre><code><div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// set a default url to locahost</span>
+    <span class="kd">var</span> <span class="nx">globalConfig</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">myIP</span><span class="o">:</span> <span class="s2">&quot;localhost&quot;</span>
+    <span class="p">};</span>
+
+
+    <span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+
+        <span class="c1">// &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</span>
+        <span class="c1">// set the globals</span>
+        <span class="nx">globalConfig</span><span class="o">:</span> <span class="nx">globalConfig</span><span class="p">,</span>
+
+        <span class="c1">// not sure why the following wou=ldn&#39;t work</span>
+        <span class="c1">//var globalConfig = {myIP: &quot;localhost&quot;};</span>
+
+
+        <span class="c1">// &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</span>
+        <span class="c1">// execute to CLI</span>
+           <span class="nx">exec</span><span class="o">:</span> <span class="p">{</span>
+
+                <span class="c1">//get IP &amp; Set a local variable</span>
+                <span class="nx">get_ip</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">command</span><span class="o">:</span> <span class="s1">&#39;ifconfig | grep -m 1 &quot;inet addr:192.168.1&quot; | cut -c21-31&#39;</span><span class="p">,</span>
+                    <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">error</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">grunt</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;exec error: &#39;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+                        <span class="p">};</span>
+                        <span class="nx">globalConfig</span><span class="p">.</span><span class="nx">myIP</span> <span class="o">=</span> <span class="nx">stdout</span><span class="p">;</span>
+                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;set myIP:&#39;</span><span class="p">,</span> <span class="nx">globalConfig</span><span class="p">.</span><span class="nx">myIP</span><span class="p">);</span>
+                    <span class="p">},</span>
+                    <span class="nx">stdout</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+                    <span class="nx">stderr</span><span class="o">:</span> <span class="kc">false</span>
+
+                <span class="p">}</span>
+            <span class="p">},</span>
+
+
+            <span class="c1">// &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</span>
+            <span class="c1">// start local development websever   </span>
+            <span class="nx">connect</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">wwwroot</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+                        <span class="nx">port</span><span class="o">:</span> <span class="mi">5001</span><span class="p">,</span>
+                        <span class="nx">hostname</span><span class="o">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+                        <span class="nx">base</span><span class="o">:</span> <span class="s1">&#39;wwwroot&#39;</span><span class="p">,</span>
+                        <span class="nx">livereload</span><span class="o">:</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+
+            <span class="c1">// &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</span>
+            <span class="c1">// open the dev site in the browser </span>
+            <span class="nx">open</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">wwwroot</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;http://&lt;%= globalConfig.myIP %&gt;:5001&#39;</span>
+                <span class="p">}</span>
+
+            <span class="p">},</span>
+
+            <span class="c1">// &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</span>
+            <span class="c1">// watch for files changes and trigger various actions when they occurs</span>
+            <span class="nx">watch</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">wwwroot</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">files</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;wwwroot/**&#39;</span><span class="p">],</span>
+                    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+                        <span class="nx">livereload</span><span class="o">:</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>            
+    <span class="p">});</span>
+
+
+    <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;, &#39;</span><span class="nx">connect</span><span class="s1">&#39;, &#39;</span><span class="nx">exec</span><span class="o">:</span><span class="nx">get_ip</span><span class="s1">&#39;, &#39;</span><span class="nx">open</span><span class="o">:</span><span class="nx">wwwroot</span><span class="s1">&#39;,&#39;</span><span class="nx">watch</span><span class="s1">&#39;]);</span>
+
+<span class="s1">    // this is a must Grunt add-on. </span>
+<span class="s1">    // It saves you installing all the grunt add-ons in node one-by-one</span>
+<span class="s1">    // just do node install: &#39;</span><span class="nx">npm</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">load</span><span class="o">-</span><span class="nx">grunt</span><span class="o">-</span><span class="nx">tasks</span><span class="s1">&#39; </span>
+<span class="s1">    // and include this simple line</span>
+<span class="s1">    require(&#39;</span><span class="nx">load</span><span class="o">-</span><span class="nx">grunt</span><span class="o">-</span><span class="nx">tasks</span><span class="err">&#39;</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/grunt-browser-open-and-reload-with-ip-instead-of-localhost/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/product-evangelist-versus-solution-scientist/"><h1 class="post-title">Product Evangelist versus Solution Scientist</h1></a><span class="post-date">2014 &#183; 2 &#183; 7</span></div><div class="post-body markdown"><p>A few conversations this week got me thinking about the way we look at, present, promote and even argue our ideas and solutions our work roles... and the kind of outcomes and efficiencies that results</p>
 <p>Mike McGee, Chief Product Officer at <a href="http://booodl.com">Booodl</a> said something very poignant to the other day. </p>
 <blockquote>
 <p>&quot;[At Booodl] we want people to argue like scientists, not lawyers.&quot;</p>
@@ -22,193 +126,179 @@
 <p>Which best describes the way you advocate in the workplace; Scientist, Evangelist or Lawyer?</p>
 <p>Which type of professional would you rather employ/commission to do work for you?</p>
 <p>Which type of &#39;public servant&#39; would you rather have spending your tax dollars?</p>
-</div><div class="comments"><a href="/posts/product-evangelist-versus-solution-scientist/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/an-angular-directive-for-including-external-markdown-files/"><h1 class="post-title">An Angular directive for including external markdown files</h1></a><span class="post-date">2014 &#183; 1 &#183; 31</span></div><div class="post-body markdown"><p>This angular directive includes external markdown files, compiling them to HTML at runtime using marked.js.</p>
-<p>I coded this as part of my <strong>notCMS.js</strong> project - which aims to offer basic content editing functionality via external markdown files to statically hosted (GitHub, DropBpox) websites.</p>
+</div><div class="comments"><a href="/posts/product-evangelist-versus-solution-scientist/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/d3-js-cambodia-choropleth/"><h1 class="post-title">d3.js Cambodia Choropleth</h1></a><span class="post-date">2014 &#183; 2 &#183; 7</span></div><div class="post-body markdown"><p>Just the basic points to make a Heatmap. You need node.js installed.</p>
+<p><strong>1) Set up a working directory</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">mkdir</span> <span class="nx">kh</span><span class="o">-</span><span class="nx">chloropeth</span>
+<span class="nx">cd</span> <span class="nx">kh</span><span class="o">-</span><span class="nx">kh</span><span class="o">-</span><span class="nx">chloropeth</span>
+</pre></div>
+</code></pre>
+<p><strong>2) Grab Cambodia base map from Open Devleopment Cambodia</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">mkdir</span> <span class="nx">downloads</span>
+<span class="nx">cd</span> <span class="nx">downloads</span>
+<span class="nx">curl</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//www.opendevelopmentcambodia.net/kml-maps/base-map.zip</span>
+<span class="nx">unzip</span> <span class="nx">bas</span><span class="o">*</span> <span class="o">-</span><span class="nx">d</span> <span class="nx">kh_provinces</span>
+</pre></div>
+</code></pre>
+<p><strong>3) Grab World Bank Subnational Malnutrition Database</strong></p>
+<p>download CSV file from <a href="http://data.worldbank.org/data-catalog/subnational-malnutrition-database">http://data.worldbank.org/data-catalog/subnational-malnutrition-database</a></p>
+<p><strong>4) Make topojsons</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">npm</span> <span class="nx">install</span> <span class="nx">topojson</span> <span class="o">-</span><span class="nx">g</span>
+<span class="nx">topojson</span>  <span class="o">-</span><span class="nx">o</span> <span class="nx">cambodia</span><span class="p">.</span><span class="nx">topo</span><span class="p">.</span><span class="nx">json</span> <span class="p">.</span><span class="o">/</span><span class="nx">kh_provinces</span><span class="o">/</span><span class="nx">Provinces</span><span class="p">.</span><span class="nx">shp</span>
+</pre></div>
+</code></pre>
+<p>**5) See a demo</p>
+<p><a href="http://ianscrivener.github.io/d3-cambodia-population-density"><a href="http://ianscrivener.github.io/d3-cambodia-population-density">http://ianscrivener.github.io/d3-cambodia-population-density</a></a></p>
+<p>**6) Grab the code</p>
+<p><a href="https://github.com/ianscrivener/d3-cambodia-population-density"><a href="https://github.com/ianscrivener/d3-cambodia-population-density">https://github.com/ianscrivener/d3-cambodia-population-density</a></a></p>
+<p>**7) Here&#39;s the code</p>
 <pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-
 <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;content-type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=UTF-8&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">An</span> <span class="nx">Angular</span> <span class="nx">directive</span> <span class="k">for</span> <span class="nx">including</span> <span class="nx">external</span> <span class="nx">markdown</span> <span class="nx">files</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
 
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s1">&#39;text/javascript&#39;</span><span class="o">&gt;</span>
-        <span class="c1">//&lt;![CDATA[ </span>
-
-        <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp&#39;</span><span class="p">,</span> <span class="p">[]);</span>
-
-        <span class="nx">app</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;markdown&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$compile&#39;</span><span class="p">,</span> <span class="s1">&#39;$http&#39;</span><span class="p">,</span> <span class="s1">&#39;$templateCache&#39;</span><span class="p">,</span>
-            <span class="kd">function</span><span class="p">(</span><span class="nx">$compile</span><span class="p">,</span> <span class="nx">$http</span><span class="p">,</span> <span class="nx">$templateCache</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="p">{</span>
-                    <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;AE&#39;</span><span class="p">,</span>
-                    <span class="nx">replace</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-                    <span class="nx">transclude</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-                    <span class="nx">compile</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">elem</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">templateLoader</span> <span class="o">=</span> <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">src</span><span class="p">,</span> <span class="p">{</span>
-                            <span class="nx">cache</span><span class="o">:</span> <span class="nx">$templateCache</span>
-                        <span class="p">})</span>
-                        <span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">md</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">elem</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">marked</span><span class="p">(</span><span class="nx">md</span><span class="p">));</span>
-                        <span class="p">})</span>
-                        <span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">md</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">errStr</span> <span class="o">=</span> <span class="s1">&#39;An error occurred processing markdown file &lt;a target=&quot;_blank&quot; href=&quot;&#39;</span> <span class="o">+</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">src</span> <span class="o">+</span> <span class="s1">&#39;&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">src</span> <span class="o">+</span> <span class="s1">&#39;&lt;/a&gt;: &#39;</span> <span class="o">+</span> <span class="nx">md</span><span class="p">;</span>
-                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">errStr</span><span class="p">);</span>
-                            <span class="nx">elem</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">errStr</span><span class="p">);</span>
-                        <span class="p">})</span>
-                        <span class="p">;</span>
-                    <span class="p">}</span>
-                <span class="p">};</span>
-            <span class="p">}</span>
-        <span class="p">])</span>
-
-         <span class="c1">//]]&gt;</span>
-    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-
-<span class="o">&lt;</span><span class="err">/head&gt;</span>
-
-<span class="o">&lt;</span><span class="nx">body</span> <span class="nx">ng</span><span class="o">-</span><span class="nx">app</span><span class="o">=</span><span class="s2">&quot;myApp&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">markdown</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;copy_1.md&quot;</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">content</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">replaced</span> <span class="nx">my</span> <span class="nx">markdown</span><span class="o">&lt;</span><span class="err">/markdown&gt;</span>
-    <span class="nx">n</span>
-    <span class="o">&lt;</span><span class="nx">p</span> <span class="nx">markdown</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;copy_2.md&quot;</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">markdown</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;copy_3.md&quot;</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="err">/body&gt;</span>
-
-<span class="o">&lt;</span><span class="err">/html&gt;</span>
-</pre></div>
-</code></pre>
-<p>Demo here - <a href="http://ianscrivener.com/markdown-include-angular-directive/"><a href="http://ianscrivener.com/markdown-include-angular-directive/">http://ianscrivener.com/markdown-include-angular-directive/</a></a></p>
-<p>Soucrecocde here - <a href="https://github.com/ianscrivener/markdown-include-angular-directive"><a href="https://github.com/ianscrivener/markdown-include-angular-directive">https://github.com/ianscrivener/markdown-include-angular-directive</a></a></p>
-</div><div class="comments"><a href="/posts/an-angular-directive-for-including-external-markdown-files/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/ifttt-now-supports-github/"><h1 class="post-title">IFTTT now supports GitHub</h1></a><span class="post-date">2014 &#183; 1 &#183; 31</span></div><div class="post-body markdown"><p>IFTTT (if this then that) is cool glue for a whole range of mashups between different web services &amp; social media. It lets you create &#39;recipres&#39; that watch for actions then trigger events. No code required! For example: Add an note in Evernote when you are mentioned on Twitter. </p>
-<p>The possibilities are quite endless and to help you get the creative juices flowing IFTTT has a pile of samples.</p>
-<p>Today&#39;s announcement that IFTTT now supports GitHub brought a collective &quot;cool&quot; from devleopers universally.</p>
-<p><img src="https://ifttt.com/assets/r2012/ifthisthenthat-big-df311ed95c86c462c5bf2f50ac9405ef.svg" alt="IFTTT"></p>
-</div><div class="comments"><a href="/posts/ifttt-now-supports-github/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/notcms-js-version-2/"><h1 class="post-title">notCMS.js version 2</h1></a><span class="post-date">2014 &#183; 1 &#183; 28</span></div><div class="post-body markdown"><p>Recently I&#39;ve been musing about a modern way to approach super simple web publishing of basic websites &amp; SPAs (single page applications)... an approach <strong>way</strong> lighter than the traditional/monolithic CMS. Specifically;</p>
-<ul>
-<li>no backend server</li>
-<li>static hosted free on DropBox</li>
-<li>content edited in via a number of markdown files in Dropbox</li>
-<li>super simple workflow so non-devs can handle it</li>
-<li>separation of course... basically meaning that the editors can only edit defined &#39;text areas&#39;</li>
-</ul>
-<p><strong>notCMS.js v1</strong> (no, I haven&#39;t written that up yet) approach was to use a grunt/jade/less/markdown workfklow... which is exactly what I use for this blog. However, I felt that this apporach is too to techy for non-devs... so have tried to simplify it here in version 2.</p>
-<p><strong>notCMS.js v2</strong> is effectively a mustache.js/markdown.js frankenstein mashup as follows;</p>
-<h3><a name="mustache-js" class="anchor" href="#mustache-js"><span class="header-link"></span></a>mustache.js</h3>
-<p><a href="https://github.com/janl/mustache.js/"><a href="https://github.com/janl/mustache.js/">https://github.com/janl/mustache.js/</a></a></p>
-<blockquote>
-<p>mustache.js is an implementation of the mustache template system in JavaScript. Mustache is a logic-less template syntax. It can be used for HTML, config files, source code - anything. It works by expanding tags in a template using values provided in a hash or object.</p>
-</blockquote>
-<p>A simple mustache example would be;</p>
-<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-        <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Joe&quot;</span><span class="p">,</span>
-            <span class="nx">calc</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">};</span>
-        <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;{{title}} spends {{calc}}&quot;</span><span class="p">,</span> <span class="nx">view</span><span class="p">);</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
-    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="err">/body&gt;</span>
-
-<span class="o">&lt;</span><span class="err">/html&gt;</span>
-</pre></div>
-</code></pre>
-<h3><a name="marked-js" class="anchor" href="#marked-js"><span class="header-link"></span></a>marked.js</h3>
-<p><a href="https://github.com/chjj/marked"><a href="https://github.com/chjj/marked">https://github.com/chjj/marked</a></a></p>
-<p>Marked.js is one of many javascript <a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a> parsers that also can be used frontend or backend. A simple example fo marked.js would be;</p>
-<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">textarea</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;text-input&quot;</span> <span class="nx">oninput</span><span class="o">=</span><span class="s2">&quot;this.editor.update()&quot;</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">&quot;6&quot;</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">&quot;60&quot;</span><span class="o">&gt;</span><span class="nx">Type</span> <span class="o">**</span><span class="nx">Markdown</span><span class="o">**</span> <span class="nx">here</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/textarea&gt;</span>
-    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-        <span class="kd">function</span> <span class="nx">Editor</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">preview</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                <span class="nx">preview</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">marked</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
-            <span class="p">};</span>
-            <span class="nx">input</span><span class="p">.</span><span class="nx">editor</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+        <span class="nx">body</span> <span class="p">{</span>
+            <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span><span class="mi">30</span><span class="nx">px</span><span class="p">;</span>
+            <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span> <span class="err">#</span><span class="nx">eee</span><span class="p">;</span>
+            <span class="nx">font</span><span class="o">-</span><span class="nx">family</span><span class="o">:</span> <span class="s2">&quot;Trebuchet MS&quot;</span><span class="p">,</span> <span class="nx">Helvetica</span><span class="p">,</span> <span class="nx">Arial</span><span class="p">,</span> <span class="nx">sans</span><span class="o">-</span><span class="nx">serif</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-        <span class="p">};</span>
-        <span class="k">new</span> <span class="nx">Editor</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;text-input&quot;</span><span class="p">),</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;preview&quot;</span><span class="p">));</span>
-    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="err">/body&gt;</span>
-<span class="o">&lt;</span><span class="err">/html&gt;</span>
-</pre></div>
-</code></pre>
-<h3><a name="notcms-js-example" class="anchor" href="#notcms-js-example"><span class="header-link"></span></a>notCMS.js example</h3>
-<p>What it does;</p>
-<ul>
-<li>load the markdown files with jquery</li>
-<li>convert markdown to html</li>
-<li>use mustache to insert that into the template</li>
-</ul>
-<p>Here&#39;s the code;</p>
-<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+        <span class="err">#</span><span class="nx">zLabel</span><span class="p">{</span>
+            <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span><span class="mi">70</span><span class="nx">px</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="p">.</span><span class="nx">greyed</span> <span class="p">{</span><span class="nx">color</span><span class="o">:</span> <span class="err">#</span><span class="nx">ccc</span><span class="p">;}</span>
+        <span class="p">.</span><span class="nx">provinces</span> <span class="p">{</span>
+            <span class="nx">fill</span><span class="o">:</span> <span class="err">#</span><span class="nx">fff</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">:</span> <span class="err">#</span><span class="mi">222</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">linejoin</span><span class="o">:</span> <span class="nx">round</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">opacity</span><span class="o">:</span> <span class="mf">0.7</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">width</span><span class="o">:</span> <span class="mi">1</span><span class="nx">px</span><span class="p">;</span>
+            <span class="nx">opacity</span><span class="o">:</span> <span class="mf">0.8</span><span class="p">;</span>
+        <span class="p">}</span>
 
-<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-        <span class="c1">//config the markdown files to load &amp; insert</span>
-        <span class="kd">var</span> <span class="nx">md_files</span>     <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;intro&#39;</span><span class="p">,</span><span class="s1">&#39;body&#39;</span><span class="p">]</span>
+        <span class="p">.</span><span class="nx">provinces</span><span class="o">:</span><span class="nx">hover</span><span class="p">{</span>
+            <span class="nx">stroke</span><span class="o">:</span> <span class="err">#</span><span class="mi">000</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">width</span><span class="o">:</span> <span class="mi">2</span><span class="nx">px</span><span class="p">;</span>
+            <span class="nx">opacity</span><span class="o">:</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">data</span>        <span class="o">=</span> <span class="p">{};</span>
-            <span class="kd">var</span> <span class="nx">template</span>     <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+        <span class="p">.</span><span class="nx">q0</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">247</span><span class="p">,</span><span class="mi">251</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q1</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span><span class="mi">235</span><span class="p">,</span><span class="mi">247</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q2</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">198</span><span class="p">,</span><span class="mi">219</span><span class="p">,</span><span class="mi">239</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q3</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">158</span><span class="p">,</span><span class="mi">202</span><span class="p">,</span><span class="mi">225</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q4</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">107</span><span class="p">,</span><span class="mi">174</span><span class="p">,</span><span class="mi">214</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q5</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span><span class="mi">146</span><span class="p">,</span><span class="mi">198</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q6</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span><span class="mi">113</span><span class="p">,</span><span class="mi">181</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q7</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">81</span><span class="p">,</span><span class="mi">156</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nx">q8</span><span class="o">-</span><span class="mi">9</span> <span class="p">{</span> <span class="nx">fill</span><span class="o">:</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">107</span><span class="p">);</span> <span class="p">}</span>
 
-            <span class="c1">// loop through the markdown files</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">md_files</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">.</span><span class="nx">country</span> <span class="p">{</span>
+            <span class="nx">fill</span><span class="o">:</span> <span class="err">#</span><span class="nx">ccc</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">:</span> <span class="err">#</span><span class="mi">333</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">width</span><span class="o">:</span> <span class="p">.</span><span class="mi">5</span><span class="nx">px</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">linejoin</span><span class="o">:</span> <span class="nx">round</span><span class="p">;</span>
+        <span class="p">}</span>
 
-                <span class="c1">// load the md file</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot;.md&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">md</span><span class="p">){</span>
+        <span class="p">.</span><span class="nx">graticule</span> <span class="p">{</span>
+            <span class="nx">fill</span><span class="o">:</span> <span class="nx">none</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">:</span> <span class="err">#</span><span class="mi">000</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">opacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">3</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">width</span><span class="o">:</span> <span class="p">.</span><span class="mi">5</span><span class="nx">px</span><span class="p">;</span>
+        <span class="p">}</span>
 
-                    <span class="c1">// add it to the data object</span>
-                    <span class="nx">data</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">marked</span><span class="p">(</span><span class="nx">md</span><span class="p">);</span>
+        <span class="p">.</span><span class="nx">graticule</span><span class="p">.</span><span class="nx">outline</span> <span class="p">{</span>
+            <span class="nx">stroke</span><span class="o">:</span> <span class="err">#</span><span class="mi">333</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">opacity</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">stroke</span><span class="o">-</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1.5</span><span class="nx">px</span><span class="p">;</span>
+        <span class="p">}</span>
 
-                    <span class="c1">// when all markdown  has finished loading</span>
-                    <span class="k">if</span><span class="p">(</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">md_files</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span>
-
-                        <span class="c1">//parse the template with mustache</span>
-                        <span class="kd">var</span> <span class="nx">new_html</span>         <span class="o">=</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-
-                        <span class="c1">// write the new html back to the body</span>
-                        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">new_html</span><span class="p">);</span>                        
-                    <span class="p">}</span>
-                <span class="p">});</span>
-            <span class="p">});</span>
-
-        <span class="p">});</span>            
-    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="err">/style&gt;</span>
 <span class="o">&lt;</span><span class="err">/head&gt;</span>
-
 <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Cambodia</span> <span class="nx">population</span> <span class="nx">density</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://d3js.org/d3.v3.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://d3js.org/d3.geo.projection.v0.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://d3js.org/queue.v1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://d3js.org/topojson.v1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Markdown</span> <span class="nx">Mustache</span> <span class="nx">Demo</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-    <span class="c">&lt;!--</span> <span class="nx">note</span> <span class="nx">we</span> <span class="nx">use</span> <span class="nx">triple</span> <span class="nx">braces</span> <span class="nx">so</span> <span class="nx">that</span> <span class="nx">mustache</span> <span class="nx">doens</span><span class="err">&#39;</span><span class="nx">t</span> <span class="nx">escape</span> <span class="nx">the</span> <span class="nx">HTML</span> <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="p">{{{</span><span class="nx">intro</span><span class="p">}}}</span><span class="o">&lt;</span><span class="err">/strong&gt;</span>
+    <span class="kd">function</span> <span class="nx">numberWithCommas</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\B(?=(\d{3})+(?!\d))/g</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{{{</span><span class="nx">body</span><span class="p">}}}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span>
+            <span class="nx">height</span> <span class="o">=</span> <span class="mi">350</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">projection</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">mercator</span><span class="p">().</span><span class="nx">center</span><span class="p">([</span><span class="mi">108</span><span class="p">,</span> <span class="mf">11.2</span><span class="p">]).</span><span class="nx">scale</span><span class="p">(</span><span class="mi">4000</span><span class="p">),</span>
+            <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category20</span><span class="p">(),</span>
+            <span class="nx">graticule</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">graticule</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">projection</span><span class="p">(</span><span class="nx">projection</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;svg&quot;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span><span class="s2">&quot;zLabel&quot;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">classed</span><span class="p">(</span><span class="s2">&quot;greyed&quot;</span><span class="p">,</span><span class="kc">true</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;mouseover the maps to see province&quot;</span><span class="p">)</span>
+            <span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">rateById</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">map</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">zStats</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">map</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">quantize</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">threshold</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span>
+            <span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="s2">&quot;q&quot;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s2">&quot;-9&quot;</span><span class="p">;</span>
+            <span class="p">}));</span>
+
+    <span class="nx">queue</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">defer</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">,</span> <span class="s2">&quot;KHM_adm1.topo.json&quot;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">defer</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">tsv</span><span class="p">,</span> <span class="s2">&quot;Census2008.tsv&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">rateById</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">ID_1</span><span class="p">),</span> <span class="o">+</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">DENSITY</span><span class="p">));</span>
+                <span class="nx">tmp</span> <span class="o">=</span> <span class="s2">&quot;[&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">ID_1</span><span class="p">,</span><span class="s1">&#39;] &#39;</span><span class="p">,</span><span class="nx">d</span><span class="p">.</span><span class="nx">PROV_NAME</span><span class="p">,</span><span class="s1">&#39; - &#39;</span><span class="p">,</span> <span class="nx">numberWithCommas</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">TOTPOP</span><span class="p">),</span><span class="s1">&#39; people&#39;</span><span class="p">);</span>
+
+                <span class="nx">zStats</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">ID_1</span><span class="p">),</span> <span class="nx">tmp</span><span class="p">);</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">await</span><span class="p">(</span><span class="nx">ready</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">ready</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">world</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">topojson</span><span class="p">.</span><span class="nx">feature</span><span class="p">(</span><span class="nx">world</span><span class="p">,</span> <span class="nx">world</span><span class="p">.</span><span class="nx">objects</span><span class="p">[</span><span class="s1">&#39;KHM_adm1.geo&#39;</span><span class="p">]).</span><span class="nx">features</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">quantize</span><span class="p">(</span><span class="nx">rateById</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">));</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nx">classed</span><span class="p">(</span><span class="s2">&quot;provinces&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;province&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">zStats</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">zStats</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span>
+                            <span class="p">.</span><span class="nx">classed</span><span class="p">(</span><span class="s2">&quot;greyed&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+                <span class="p">})</span>
+
+                <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;mouseout&quot;</span><span class="p">,</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;mouseover the maps to see province&#39;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">classed</span><span class="p">(</span><span class="s2">&quot;greyed&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+                <span class="p">})</span>
+            <span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
 <span class="o">&lt;</span><span class="err">/body&gt;</span>
-
 <span class="o">&lt;</span><span class="err">/html&gt;</span>
 </pre></div>
 </code></pre>
-<p>Click here to see a working verison - <a href="http://ianscrivener.com/mustache-markdown-demo/"><a href="http://ianscrivener.com/mustache-markdown-demo/">http://ianscrivener.com/mustache-markdown-demo/</a></a></p>
-<p>Sourcecode is here: <a href="https://github.com/ianscrivener/mustache-markdown-demo"><a href="https://github.com/ianscrivener/mustache-markdown-demo">https://github.com/ianscrivener/mustache-markdown-demo</a></a>    </p>
-</div><div class="comments"><a href="/posts/notcms-js-version-2/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/" class="newer">Newer &#8594;</a><a href="/page/2/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>$("a[href^='http://']").attr("target","_blank");
+</div><div class="comments"><a href="/posts/d3-js-cambodia-choropleth/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/" class="newer">Newer &#8594;</a><a href="/page/2/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>$("a[href^='http://']").attr("target","_blank");
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
