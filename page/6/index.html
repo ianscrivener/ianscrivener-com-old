@@ -10,7 +10,95 @@
 
 <p><br/></p>
 <!--a href="/contact.html">contact me</a-->
-</div></div><div class="post-head group"><a href="/posts/install-geosever-mongo-node-js-and-nginx-on-ubuntu-13-04/"><h1 class="post-title">Install geosever, mongo, node.js and nginx on ubuntu 13.04</h1></a><span class="post-date">2011 &#183; 11 &#183; 25</span></div><div class="post-body markdown"><h3><a name="1-install-ubuntu-13-04-server" class="anchor" href="#1-install-ubuntu-13-04-server"><span class="header-link"></span></a>1) Install Ubuntu 13.04 Server</h3>
+</div></div><div class="post-head group"><a href="/posts/setting-up-your-first-basic-node-js-web-application/"><h1 class="post-title">Setting up your first basic node.js web application</h1></a><span class="post-date">2012 &#183; 1 &#183; 4</span></div><div class="post-body markdown"><h1><a name="setting-up-a-basic-node-js-web-application-on-ubuntu" class="anchor" href="#setting-up-a-basic-node-js-web-application-on-ubuntu"><span class="header-link"></span></a>Setting up a basic node.js web application on Ubuntu</h1>
+<p>This really the first thing to try after you&#39;ve installed node.js on Ubuntu.</p>
+<p><br/><strong>Install the express &amp; nodemon node.js modules</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">express</span> <span class="o">-</span><span class="nx">g</span>
+<span class="nx">npm</span> <span class="nx">install</span> <span class="nx">nodemon</span> <span class="o">-</span><span class="nx">g</span>
+</pre></div>
+</code></pre>
+<p><br/><strong>Make a directory &amp; change to that directory</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">mkdir</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">node</span>
+<span class="nx">cd</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">node</span>
+</pre></div>
+</code></pre>
+<p><br/><strong>Create an express node.js application</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">express</span> <span class="nx">testapp</span>
+<span class="nx">cd</span> <span class="nx">testapp</span>
+</pre></div>
+</code></pre>
+<p><br/><strong>Start the node.js test web application</strong></p>
+<pre><code><div class="highlight"><pre><span class="nx">nodemon</span> <span class="nx">app</span><span class="p">.</span><span class="nx">js</span>
+</pre></div>
+</code></pre>
+<p>this should return something like.. indicating success</p>
+<pre><code><div class="highlight"><pre><span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">v0</span><span class="p">.</span><span class="mf">7.8</span>
+<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">to</span> <span class="nx">restart</span> <span class="nx">at</span> <span class="nx">any</span> <span class="nx">time</span><span class="p">,</span> <span class="nx">enter</span> <span class="err">`</span><span class="nx">rs</span><span class="err">`</span>
+<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">watching</span><span class="o">:</span> <span class="err">/home/webapp/node/test-app</span>
+<span class="mi">10</span> <span class="nx">Jul</span> <span class="mi">06</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">03</span> <span class="o">-</span> <span class="p">[</span><span class="nx">nodemon</span><span class="p">]</span> <span class="nx">starting</span> <span class="err">`</span><span class="nx">node</span> <span class="nx">app</span><span class="p">.</span><span class="nx">js</span><span class="err">`</span>
+<span class="nx">Express</span> <span class="nx">server</span> <span class="nx">listening</span> <span class="nx">on</span> <span class="nx">port</span> <span class="mi">3000</span>
+</pre></div>
+</code></pre>
+<p><br/><strong>check that it is running OK with web browser</strong></p>
+<p><strong><a href="http://xxx.xxx.xxx.xxx:3000/"><a href="http://xxx.xxx.xxx.xxx:3000/">http://xxx.xxx.xxx.xxx:3000/</a></a></strong></p>
+<p>You should see the basic &#39;Welcome to Express&#39; page.</p>
+<p>Congratualtions... your first node.js steps!!</p>
+</div><div class="comments"><a href="/posts/setting-up-your-first-basic-node-js-web-application/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-jetty-and-geoserver-on-ubuntu-12-04/"><h1 class="post-title">Install jetty and geoserver on Ubuntu 12.04</h1></a><span class="post-date">2011 &#183; 12 &#183; 1</span></div><div class="post-body markdown"><p>My J2EE preference for Geoserver/OpenGeo is Jetty over Tomcat. here&#39;s how to set it up.</p>
+<h3><a name="1-install-setup-openjdk" class="anchor" href="#1-install-setup-openjdk"><span class="header-link"></span></a>1) install &amp; setup openJDK</h3>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">openjdk</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="nx">jdk</span>
+<span class="nx">mkdir</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">java</span>
+<span class="err">#</span> <span class="nx">setup</span> <span class="nx">a</span> <span class="nx">symbolic</span> <span class="nx">link</span> <span class="nx">from</span> <span class="nx">your</span> <span class="nx">openJDK</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">java</span> <span class="nx">path</span> <span class="nx">that</span> <span class="nx">jetty</span> <span class="nx">looks</span> <span class="k">for</span> 
+<span class="nx">ln</span> <span class="o">-</span><span class="nx">s</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">jvm</span><span class="o">/</span><span class="nx">java</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="nx">openjdk</span><span class="o">-</span><span class="nx">amd64</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">java</span><span class="o">/</span><span class="k">default</span>
+</pre></div>
+</code></pre>
+<h3><a name="2-install-jetty" class="anchor" href="#2-install-jetty"><span class="header-link"></span></a>2) install jetty</h3>
+<pre><code><div class="highlight"><pre><span class="nx">cd</span> <span class="o">/</span><span class="nx">opt</span>
+<span class="nx">wget</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//mirrors.ustc.edu.cn/eclipse/jetty/stable-9/dist/jetty-distribution-9.0.4.v20130625.zip</span>
+<span class="nx">unzip</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
+<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
+<span class="nx">mv</span> <span class="nx">jetty</span><span class="o">-</span><span class="nx">distribution</span><span class="o">-</span><span class="mf">9.0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="nx">v20130625</span><span class="o">/</span> <span class="nx">jetty</span>
+<span class="nx">useradd</span> <span class="nx">jetty</span> <span class="o">-</span><span class="nx">U</span> <span class="o">-</span><span class="nx">s</span> <span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="kc">false</span>
+<span class="nx">chown</span> <span class="o">-</span><span class="nx">R</span> <span class="nx">jetty</span><span class="o">:</span><span class="nx">jetty</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">jetty</span>
+</pre></div>
+</code></pre>
+<h3><a name="3-create-the-jetty-service" class="anchor" href="#3-create-the-jetty-service"><span class="header-link"></span></a>3) create the jetty service</h3>
+<pre><code><div class="highlight"><pre><span class="nx">cp</span> <span class="o">/</span><span class="nx">opt</span><span class="o">/</span><span class="nx">jetty</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">jetty</span><span class="p">.</span><span class="nx">sh</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">jetty</span>
+<span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="k">default</span><span class="err">/jetty # and copy the content below</span>
+</pre></div>
+</code></pre>
+<h3><a name="4-add-the-following-to-etcinit-djetty-save-close" class="anchor" href="#4-add-the-following-to-etcinit-djetty-save-close"><span class="header-link"></span></a>4) add the following to /etc/init.d/jetty, save, close</h3>
+<pre><code><div class="highlight"><pre><span class="nx">JAVA_HOME</span><span class="o">=</span><span class="err">/usr/java/default</span>
+<span class="nx">NO_START</span><span class="o">=</span><span class="mi">0</span>
+<span class="nx">JETTY_HOST</span><span class="o">=</span><span class="mf">0.0</span><span class="p">.</span><span class="mf">0.0</span>
+<span class="nx">JETTY_PORT</span><span class="o">=</span><span class="mi">8000</span>
+<span class="nx">JETTY_USER</span><span class="o">=</span><span class="nx">jetty</span>
+</pre></div>
+</code></pre>
+<h3><a name="5-register-the-startup-service" class="anchor" href="#5-register-the-startup-service"><span class="header-link"></span></a>5) register the startup service</h3>
+<pre><code><div class="highlight"><pre><span class="nx">update</span><span class="o">-</span><span class="nx">rc</span><span class="p">.</span><span class="nx">d</span> <span class="nx">jetty</span> <span class="nx">defaults</span>
+</pre></div>
+</code></pre>
+<h3><a name="6-start-jetty" class="anchor" href="#6-start-jetty"><span class="header-link"></span></a>6) start jetty</h3>
+<pre><code><div class="highlight"><pre><span class="nx">service</span> <span class="nx">jetty</span> <span class="nx">start</span>
+</pre></div>
+</code></pre>
+<h3><a name="7-check-its-all-ok-in-your-web-browser" class="anchor" href="#7-check-its-all-ok-in-your-web-browser"><span class="header-link"></span></a>7) check its all OK in your web browser</h3>
+<p><a href="http://localhost:8000" title="http://localhost:8000"><a href="http://localhost:8000">http://localhost:8000</a></a></p>
+<h3><a name="8-install-geoserver" class="anchor" href="#8-install-geoserver"><span class="header-link"></span></a>8) Install geoserver</h3>
+<p>if you already have installed geoserver on tomcat you can do this</p>
+<pre><code><div class="highlight"><pre><span class="nx">cp</span> <span class="o">/</span><span class="kd">var</span><span class="err">/lib/tomcat6/webapps/geoserver.war /opt/jetty/webapps/</span>
+<span class="nx">service</span> <span class="nx">jetty</span> <span class="nx">restart</span>
+</pre></div>
+</code></pre>
+<p>or else, 
+    cd /opt/jetty/webapps
+    wget <a href="http://sourceforge.net/projects/geoserver/files/GeoServer/2.3.4/geoserver-2.3.4-war.zip">http://sourceforge.net/projects/geoserver/files/GeoServer/2.3.4/geoserver-2.3.4-war.zip</a></p>
+<pre><code><div class="highlight"><pre><span class="nx">unzip</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
+<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">txt</span>
+<span class="nx">rm</span> <span class="o">*</span><span class="p">.</span><span class="nx">zip</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/install-jetty-and-geoserver-on-ubuntu-12-04/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-geosever-mongo-node-js-and-nginx-on-ubuntu-13-04/"><h1 class="post-title">Install geosever, mongo, node.js and nginx on ubuntu 13.04</h1></a><span class="post-date">2011 &#183; 11 &#183; 25</span></div><div class="post-body markdown"><h3><a name="1-install-ubuntu-13-04-server" class="anchor" href="#1-install-ubuntu-13-04-server"><span class="header-link"></span></a>1) Install Ubuntu 13.04 Server</h3>
 <blockquote>
 <p>Previously you need to have setup Ubuntu 13.04 Server on your VMWare or Rackspace/OpenStack platform.</p>
 </blockquote>

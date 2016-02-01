@@ -10,7 +10,136 @@
 
 <p><br/></p>
 <!--a href="/contact.html">contact me</a-->
-</div></div><div class="post-head group"><a href="/posts/install-etckeeper-to-backup-ubuntu-application-setup/"><h1 class="post-title">Install etckeeper to backup Ubuntu application setup</h1></a><span class="post-date">2013 &#183; 12 &#183; 12</span></div><div class="post-body markdown"><p><strong>etckeeper</strong> saves your Ubuntu package configuration using a version control (Git, Subversion, Bazaar, Mercurial etc). Everytime you add/remove/update apt/aptitude packages etckeeper automagically commits the changes to version control. </p>
+</div></div><div class="post-head group"><a href="/posts/notcms-js-version-2/"><h1 class="post-title">notCMS.js version 2</h1></a><span class="post-date">2014 &#183; 1 &#183; 28</span></div><div class="post-body markdown"><p>Recently I&#39;ve been musing about a modern way to approach super simple web publishing of basic websites &amp; SPAs (single page applications)... an approach <strong>way</strong> lighter than the traditional/monolithic CMS. Specifically;</p>
+<ul>
+<li>no backend server</li>
+<li>static hosted free on DropBox</li>
+<li>content edited in via a number of markdown files in Dropbox</li>
+<li>super simple workflow so non-devs can handle it</li>
+<li>separation of course... basically meaning that the editors can only edit defined &#39;text areas&#39;</li>
+</ul>
+<p><strong>notCMS.js v1</strong> (no, I haven&#39;t written that up yet) approach was to use a grunt/jade/less/markdown workfklow... which is exactly what I use for this blog. However, I felt that this apporach is too to techy for non-devs... so have tried to simplify it here in version 2.</p>
+<p><strong>notCMS.js v2</strong> is effectively a mustache.js/markdown.js frankenstein mashup as follows;</p>
+<h3><a name="mustache-js" class="anchor" href="#mustache-js"><span class="header-link"></span></a>mustache.js</h3>
+<p><a href="https://github.com/janl/mustache.js/"><a href="https://github.com/janl/mustache.js/">https://github.com/janl/mustache.js/</a></a></p>
+<blockquote>
+<p>mustache.js is an implementation of the mustache template system in JavaScript. Mustache is a logic-less template syntax. It can be used for HTML, config files, source code - anything. It works by expanding tags in a template using values provided in a hash or object.</p>
+</blockquote>
+<p>A simple mustache example would be;</p>
+<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+        <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Joe&quot;</span><span class="p">,</span>
+            <span class="nx">calc</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+        <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;{{title}} spends {{calc}}&quot;</span><span class="p">,</span> <span class="nx">view</span><span class="p">);</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+
+<span class="o">&lt;</span><span class="err">/html&gt;</span>
+</pre></div>
+</code></pre>
+<h3><a name="marked-js" class="anchor" href="#marked-js"><span class="header-link"></span></a>marked.js</h3>
+<p><a href="https://github.com/chjj/marked"><a href="https://github.com/chjj/marked">https://github.com/chjj/marked</a></a></p>
+<p>Marked.js is one of many javascript <a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a> parsers that also can be used frontend or backend. A simple example fo marked.js would be;</p>
+<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">textarea</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;text-input&quot;</span> <span class="nx">oninput</span><span class="o">=</span><span class="s2">&quot;this.editor.update()&quot;</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">&quot;6&quot;</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">&quot;60&quot;</span><span class="o">&gt;</span><span class="nx">Type</span> <span class="o">**</span><span class="nx">Markdown</span><span class="o">**</span> <span class="nx">here</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/textarea&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+        <span class="kd">function</span> <span class="nx">Editor</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">preview</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">preview</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">marked</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+            <span class="p">};</span>
+            <span class="nx">input</span><span class="p">.</span><span class="nx">editor</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+        <span class="p">};</span>
+        <span class="k">new</span> <span class="nx">Editor</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;text-input&quot;</span><span class="p">),</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;preview&quot;</span><span class="p">));</span>
+    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span>
+</pre></div>
+</code></pre>
+<h3><a name="notcms-js-example" class="anchor" href="#notcms-js-example"><span class="header-link"></span></a>notCMS.js example</h3>
+<p>What it does;</p>
+<ul>
+<li>load the markdown files with jquery</li>
+<li>convert markdown to html</li>
+<li>use mustache to insert that into the template</li>
+</ul>
+<p>Here&#39;s the code;</p>
+<pre><code><div class="highlight"><pre><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+        <span class="c1">//config the markdown files to load &amp; insert</span>
+        <span class="kd">var</span> <span class="nx">md_files</span>     <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;intro&#39;</span><span class="p">,</span><span class="s1">&#39;body&#39;</span><span class="p">]</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">data</span>        <span class="o">=</span> <span class="p">{};</span>
+            <span class="kd">var</span> <span class="nx">template</span>     <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+
+            <span class="c1">// loop through the markdown files</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">md_files</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="c1">// load the md file</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot;.md&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">md</span><span class="p">){</span>
+
+                    <span class="c1">// add it to the data object</span>
+                    <span class="nx">data</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">marked</span><span class="p">(</span><span class="nx">md</span><span class="p">);</span>
+
+                    <span class="c1">// when all markdown  has finished loading</span>
+                    <span class="k">if</span><span class="p">(</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="nx">md_files</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span>
+
+                        <span class="c1">//parse the template with mustache</span>
+                        <span class="kd">var</span> <span class="nx">new_html</span>         <span class="o">=</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+
+                        <span class="c1">// write the new html back to the body</span>
+                        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">new_html</span><span class="p">);</span>                        
+                    <span class="p">}</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+
+        <span class="p">});</span>            
+    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="err">/head&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Markdown</span> <span class="nx">Mustache</span> <span class="nx">Demo</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">note</span> <span class="nx">we</span> <span class="nx">use</span> <span class="nx">triple</span> <span class="nx">braces</span> <span class="nx">so</span> <span class="nx">that</span> <span class="nx">mustache</span> <span class="nx">doens</span><span class="err">&#39;</span><span class="nx">t</span> <span class="nx">escape</span> <span class="nx">the</span> <span class="nx">HTML</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="p">{{{</span><span class="nx">intro</span><span class="p">}}}</span><span class="o">&lt;</span><span class="err">/strong&gt;</span>
+
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{{{</span><span class="nx">body</span><span class="p">}}}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+
+<span class="o">&lt;</span><span class="err">/html&gt;</span>
+</pre></div>
+</code></pre>
+<p>Click here to see a working verison - <a href="http://ianscrivener.com/mustache-markdown-demo/"><a href="http://ianscrivener.com/mustache-markdown-demo/">http://ianscrivener.com/mustache-markdown-demo/</a></a></p>
+<p>Sourcecode is here: <a href="https://github.com/ianscrivener/mustache-markdown-demo"><a href="https://github.com/ianscrivener/mustache-markdown-demo">https://github.com/ianscrivener/mustache-markdown-demo</a></a>    </p>
+</div><div class="comments"><a href="/posts/notcms-js-version-2/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/docker-container-versus-image/"><h1 class="post-title">Docker: container versus image</h1></a><span class="post-date">2014 &#183; 1 &#183; 9</span></div><div class="post-body markdown"><h1><a name="docker-container-versus-docker-image" class="anchor" href="#docker-container-versus-docker-image"><span class="header-link"></span></a>Docker container versus Docker Image</h1>
+<p><strong>Briefly: think Windows install CD versus a freshly installed running Windows PC... </strong></p>
+<p>A Docker Image is a saved copy of a machine. </p>
+<p>A Docker Container is a running version of a Docker Image.</p>
+<p>For example, we could run many slave machine processes as Docker Containers - based on the same Docker Image     </p>
+</div><div class="comments"><a href="/posts/docker-container-versus-image/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-etckeeper-to-backup-ubuntu-application-setup/"><h1 class="post-title">Install etckeeper to backup Ubuntu application setup</h1></a><span class="post-date">2013 &#183; 12 &#183; 12</span></div><div class="post-body markdown"><p><strong>etckeeper</strong> saves your Ubuntu package configuration using a version control (Git, Subversion, Bazaar, Mercurial etc). Everytime you add/remove/update apt/aptitude packages etckeeper automagically commits the changes to version control. </p>
 <p>Ever need to quickly roll-back Ubuntu to s previous application setup state. Yeah.. me too!!</p>
 <h3><a name="install" class="anchor" href="#install"><span class="header-link"></span></a>Install</h3>
 <pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">etckeeper</span>
@@ -156,83 +285,7 @@
 <pre><code><div class="highlight"><pre><span class="nx">docker</span> <span class="nx">rmi</span> <span class="o">&lt;</span><span class="nx">image_name</span><span class="o">&gt;</span>
 </pre></div>
 </code></pre>
-</div><div class="comments"><a href="/posts/installing-geoserver-in-docker/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/"><h1 class="post-title">Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Opengeo is a bundled suite of applications for making custom maps &amp; dpoing spatial processing. Includes</p>
-<ul>
-<li><strong>geoserver</strong>: an excellent opensource map server</li>
-<li><strong>postgis</strong>: an extension for postgresql database tohat offers advanced spatial processing &amp; spatial data storage</li>
-<li><strong>Openlayers</strong>: an excellent javascript framework for web mapping</li>
-<li><strong>GeoExt</strong>: Extentsion to Ext javascript framework</li>
-<li><strong>geowebcache</strong>: image tile cache, seed-on-demand &amp; pre-seeding. Can also proxy map tiles from Google Maps, OSM etc)</li>
-<li>... some magic &amp; glue to bring it all together</li>
-</ul>
-<p><br/>
-I&#39;ve used a 512Mb server for HROK, this is enough for development, but for production servers the geoserver (java/Tomcat) and postgresql processing can be significant... drawing maps, spatial calculations etc, so I&#39;d usually go to 2048Mb sized cloud server. </p>
-<h3><a name="install-steps" class="anchor" href="#install-steps"><span class="header-link"></span></a>Install Steps</h3>
-<p><br/>
-Grab the OpenGeo GPG Apt key</p>
-<pre><code><div class="highlight"><pre><span class="nx">wget</span> <span class="o">-</span><span class="nx">qO</span><span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//apt.opengeo.org/gpg.key | apt-key add -</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Add the APT repository</p>
-<pre><code><div class="highlight"><pre><span class="nx">echo</span> <span class="s2">&quot;deb http://apt.opengeo.org/suite/v3/ubuntu lucid main&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/etc/apt/sources.list</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Update APT &amp; install opengeo-suite</p>
-<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
-<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">opengeo</span><span class="o">-</span><span class="nx">suite</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Browse to the geoserver admin to make sure it all worked</p>
-<pre><code><div class="highlight"><pre><span class="nx">http</span><span class="o">:</span><span class="c1">//xxx.xxx.xxx.xxx:8080/geoserver/index.html</span>
-</pre></div>
-</code></pre>
-</div><div class="comments"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/config-a-node-js-connector-for-postgresql/"><h1 class="post-title">Config a node.js connector for postgresql</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: since writing this post I have swithex (wholeheartedly) to using sss for all my node.js database connections (specifically mySQL, postgresql &amp; mongoDB).</p>
-<h3><a name="1-install-ubuntu-pg-driver" class="anchor" href="#1-install-ubuntu-pg-driver"><span class="header-link"></span></a>1) install ubuntu pg driver</h3>
-<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">libpq</span><span class="o">-</span><span class="nx">dev</span>
-</pre></div>
-</code></pre>
-<h3><a name="2-npm-install-node-js-pg-driver" class="anchor" href="#2-npm-install-node-js-pg-driver"><span class="header-link"></span></a>2) npm install node.js pg driver</h3>
-<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">pg</span>
-</pre></div>
-</code></pre>
-<h3><a name="3-install-pg-orm-module" class="anchor" href="#3-install-pg-orm-module"><span class="header-link"></span></a>3) Install PG ORM Module</h3>
-<pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">orm</span>
-</pre></div>
-</code></pre>
-<h3><a name="4-test-that-the-pg-drivers-works-ok" class="anchor" href="#4-test-that-the-pg-drivers-works-ok"><span class="header-link"></span></a>4) Test that the pg drivers works OK</h3>
-<pre><code><div class="highlight"><pre><span class="kd">var</span> <span class="nx">pg</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;pg&#39;</span><span class="p">);</span> 
-<span class="c1">//or native libpq bindings</span>
-<span class="c1">//var pg = require(&#39;pg&#39;).native</span>
-
-<span class="c1">//var conString = &quot;tcp://postgres:1234@localhost/postgres&quot;;</span>
-
-<span class="kd">var</span> <span class="nx">conString</span><span class="o">=</span> <span class="s2">&quot;tcp://opengeo:opengeo@localhost/bmrg&quot;</span><span class="p">;</span>
-
-
-<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">pg</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="nx">conString</span><span class="p">);</span>
-<span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;could not connect to postgres&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="nx">client</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;SELECT NOW() AS &quot;theTime&quot;&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;error running query&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">theTime</span><span class="p">);</span>
-    <span class="c1">//output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)</span>
-    <span class="nx">client</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
-  <span class="p">});</span>
-<span class="p">});</span>
-</pre></div>
-</code></pre>
-<p><strong>Result should be like:</strong></p>
-<pre><code><div class="highlight"><pre><span class="nx">Mon</span> <span class="nx">Apr</span> <span class="mi">15</span> <span class="mi">2013</span> <span class="mi">08</span><span class="o">:</span><span class="mi">22</span><span class="o">:</span><span class="mi">01</span> <span class="nx">GMT</span><span class="o">+</span><span class="mi">0000</span> <span class="p">(</span><span class="nx">UTC</span><span class="p">)</span>
-</pre></div>
-</code></pre>
-</div><div class="comments"><a href="/posts/config-a-node-js-connector-for-postgresql/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/page/2/" class="newer">Newer &#8594;</a><a href="/page/4/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>$("a[href^='http://']").attr("target","_blank");
+</div><div class="comments"><a href="/posts/installing-geoserver-in-docker/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="pagination group"><a href="/page/2/" class="newer">Newer &#8594;</a><a href="/page/4/" class="older">&#8592; Older</a></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script><script src="/scripts/main.js" type="text/javascript"></script><script>$("a[href^='http://']").attr("target","_blank");
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
