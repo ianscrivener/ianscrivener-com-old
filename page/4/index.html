@@ -10,40 +10,7 @@
 
 <p><br/></p>
 <!--a href="/contact.html">contact me</a-->
-</div></div><div class="post-head group"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/"><h1 class="post-title">Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Opengeo is a bundled suite of applications for making custom maps &amp; dpoing spatial processing. Includes</p>
-<ul>
-<li><strong>geoserver</strong>: an excellent opensource map server</li>
-<li><strong>postgis</strong>: an extension for postgresql database tohat offers advanced spatial processing &amp; spatial data storage</li>
-<li><strong>Openlayers</strong>: an excellent javascript framework for web mapping</li>
-<li><strong>GeoExt</strong>: Extentsion to Ext javascript framework</li>
-<li><strong>geowebcache</strong>: image tile cache, seed-on-demand &amp; pre-seeding. Can also proxy map tiles from Google Maps, OSM etc)</li>
-<li>... some magic &amp; glue to bring it all together</li>
-</ul>
-<p><br/>
-I&#39;ve used a 512Mb server for HROK, this is enough for development, but for production servers the geoserver (java/Tomcat) and postgresql processing can be significant... drawing maps, spatial calculations etc, so I&#39;d usually go to 2048Mb sized cloud server. </p>
-<h3><a name="install-steps" class="anchor" href="#install-steps"><span class="header-link"></span></a>Install Steps</h3>
-<p><br/>
-Grab the OpenGeo GPG Apt key</p>
-<pre><code><div class="highlight"><pre><span class="nx">wget</span> <span class="o">-</span><span class="nx">qO</span><span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//apt.opengeo.org/gpg.key | apt-key add -</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Add the APT repository</p>
-<pre><code><div class="highlight"><pre><span class="nx">echo</span> <span class="s2">&quot;deb http://apt.opengeo.org/suite/v3/ubuntu lucid main&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/etc/apt/sources.list</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Update APT &amp; install opengeo-suite</p>
-<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
-<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">opengeo</span><span class="o">-</span><span class="nx">suite</span>
-</pre></div>
-</code></pre>
-<p><br/>
-Browse to the geoserver admin to make sure it all worked</p>
-<pre><code><div class="highlight"><pre><span class="nx">http</span><span class="o">:</span><span class="c1">//xxx.xxx.xxx.xxx:8080/geoserver/index.html</span>
-</pre></div>
-</code></pre>
-</div><div class="comments"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/config-a-node-js-connector-for-postgresql/"><h1 class="post-title">Config a node.js connector for postgresql</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: since writing this post I have swithex (wholeheartedly) to using sss for all my node.js database connections (specifically mySQL, postgresql &amp; mongoDB).</p>
+</div></div><div class="post-head group"><a href="/posts/config-a-node-js-connector-for-postgresql/"><h1 class="post-title">Config a node.js connector for postgresql</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Note: since writing this post I have swithex (wholeheartedly) to using sss for all my node.js database connections (specifically mySQL, postgresql &amp; mongoDB).</p>
 <h3><a name="1-install-ubuntu-pg-driver" class="anchor" href="#1-install-ubuntu-pg-driver"><span class="header-link"></span></a>1) install ubuntu pg driver</h3>
 <pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">libpq</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
@@ -86,7 +53,40 @@ Browse to the geoserver admin to make sure it all worked</p>
 <pre><code><div class="highlight"><pre><span class="nx">Mon</span> <span class="nx">Apr</span> <span class="mi">15</span> <span class="mi">2013</span> <span class="mi">08</span><span class="o">:</span><span class="mi">22</span><span class="o">:</span><span class="mi">01</span> <span class="nx">GMT</span><span class="o">+</span><span class="mi">0000</span> <span class="p">(</span><span class="nx">UTC</span><span class="p">)</span>
 </pre></div>
 </code></pre>
-</div><div class="comments"><a href="/posts/config-a-node-js-connector-for-postgresql/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/config-node-js-as-an-upstart-service/"><h1 class="post-title">Config node.js as an upstart service</h1></a><span class="post-date">2013 &#183; 3 &#183; 12</span></div><div class="post-body markdown"><p>This How-To was wwritten for Ubuntu 12.10, though will likely also work for Ubuntu 12.04+ as well as other Linux flavours that support  upstart <a href="http://upstart.ubuntu.com/">Upstart</a>.</p>
+</div><div class="comments"><a href="/posts/config-a-node-js-connector-for-postgresql/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/"><h1 class="post-title">Install OpenGeo (geoserver) on Ubuntu 12.04 on Rackspace cloud</h1></a><span class="post-date">2013 &#183; 4 &#183; 22</span></div><div class="post-body markdown"><p>Opengeo is a bundled suite of applications for making custom maps &amp; dpoing spatial processing. Includes</p>
+<ul>
+<li><strong>geoserver</strong>: an excellent opensource map server</li>
+<li><strong>postgis</strong>: an extension for postgresql database tohat offers advanced spatial processing &amp; spatial data storage</li>
+<li><strong>Openlayers</strong>: an excellent javascript framework for web mapping</li>
+<li><strong>GeoExt</strong>: Extentsion to Ext javascript framework</li>
+<li><strong>geowebcache</strong>: image tile cache, seed-on-demand &amp; pre-seeding. Can also proxy map tiles from Google Maps, OSM etc)</li>
+<li>... some magic &amp; glue to bring it all together</li>
+</ul>
+<p><br/>
+I&#39;ve used a 512Mb server for HROK, this is enough for development, but for production servers the geoserver (java/Tomcat) and postgresql processing can be significant... drawing maps, spatial calculations etc, so I&#39;d usually go to 2048Mb sized cloud server. </p>
+<h3><a name="install-steps" class="anchor" href="#install-steps"><span class="header-link"></span></a>Install Steps</h3>
+<p><br/>
+Grab the OpenGeo GPG Apt key</p>
+<pre><code><div class="highlight"><pre><span class="nx">wget</span> <span class="o">-</span><span class="nx">qO</span><span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//apt.opengeo.org/gpg.key | apt-key add -</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Add the APT repository</p>
+<pre><code><div class="highlight"><pre><span class="nx">echo</span> <span class="s2">&quot;deb http://apt.opengeo.org/suite/v3/ubuntu lucid main&quot;</span> <span class="o">&gt;&gt;</span> <span class="err">/etc/apt/sources.list</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Update APT &amp; install opengeo-suite</p>
+<pre><code><div class="highlight"><pre><span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">opengeo</span><span class="o">-</span><span class="nx">suite</span>
+</pre></div>
+</code></pre>
+<p><br/>
+Browse to the geoserver admin to make sure it all worked</p>
+<pre><code><div class="highlight"><pre><span class="nx">http</span><span class="o">:</span><span class="c1">//xxx.xxx.xxx.xxx:8080/geoserver/index.html</span>
+</pre></div>
+</code></pre>
+</div><div class="comments"><a href="/posts/install-opengeo-geoserver-on-ubuntu-12-04-on-rackspace-cloud/#comments"><span class="icon-bubbles"></span>Comments</a></div><div class="post-head group"><a href="/posts/config-node-js-as-an-upstart-service/"><h1 class="post-title">Config node.js as an upstart service</h1></a><span class="post-date">2013 &#183; 3 &#183; 12</span></div><div class="post-body markdown"><p>This How-To was wwritten for Ubuntu 12.10, though will likely also work for Ubuntu 12.04+ as well as other Linux flavours that support  upstart <a href="http://upstart.ubuntu.com/">Upstart</a>.</p>
 <h3><a name="1-create-an-upstart-script" class="anchor" href="#1-create-an-upstart-script"><span class="header-link"></span></a>1) Create an upstart script;</h3>
 <pre><code><div class="highlight"><pre><span class="nx">nano</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="o">/</span><span class="nx">node</span><span class="p">.</span><span class="nx">conf</span>
 </pre></div>
